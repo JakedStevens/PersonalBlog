@@ -16,10 +16,22 @@
 	border: none;
 	max-width: 400px;
 	height: 125px;
-	width: 65%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .card-col {
 	justify-content: center;
 	display: flex;
+}
+
+.card-link {
+	all: unset;
+	cursor: pointer;
+	width: 65%;
+}
+
+a:hover {
+	color: #686868;
 }

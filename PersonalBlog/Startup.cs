@@ -1,18 +1,25 @@
+using PersonalBlog.Web.Models;
+using PersonalBlog.ClassLibrary;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PersonalBlog
+namespace PersonalBlog.Web
 {
 	public class Startup
 	{
+		static readonly PersonalBlogDbContext _dbContext = new();
+
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
@@ -24,6 +31,7 @@ namespace PersonalBlog
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
+			services.AddTransient<PersonalBlogDbContext>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,8 +57,12 @@ namespace PersonalBlog
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllerRoute(
-					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}");
+					name: "Home",
+					pattern: "{controller=Home}/{action=Index}");
+				endpoints.MapControllerRoute(
+					name: "Drums",
+					pattern: "{controller=Drums}/{action=Index}",
+					defaults: new { controller = "Drums", action = "Index" });
 			});
 		}
 	}
