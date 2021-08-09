@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +17,16 @@ namespace PersonalBlog.Web.Controllers
         }
 
         // GET: BlogPosts
-        public async Task<IActionResult> Index()
+        public async Task<ViewResult> Index()
         {
             return View(await _context.BlogPost.ToListAsync());
+        }
+
+        public async Task<ViewResult> Drums()
+        {
+            List<BlogPost> posts = await _context.BlogPost.ToListAsync();
+            List<BlogPost> drumPosts = posts.Where(post => post.PostCategory == "Drums").ToList();
+            return View(drumPosts);
         }
 
         // GET: BlogPosts/Details/5

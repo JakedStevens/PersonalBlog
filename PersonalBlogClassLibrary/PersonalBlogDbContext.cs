@@ -10,9 +10,9 @@ namespace PersonalBlog.ClassLibrary
         public DbSet<BlogPost> BlogPost { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
 
-        }
+        //}
     }
 }

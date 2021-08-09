@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
+using System;
 
 namespace PersonalBlog.ClassLibrary
 {
@@ -15,7 +15,9 @@ namespace PersonalBlog.ClassLibrary
 
 		public string PostCategory { get; set; }
 
+		public string PostImageURL { get; set; }
+
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-		public string PostDate { get; set; }
+		public DateTime PostDate { get; set; }
 	}
 }

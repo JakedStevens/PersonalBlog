@@ -8,11 +8,28 @@
 	background-position: 50% 30%;
 }
 
-.card {
+.post-card {
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	word-wrap: break-word;
+	background-color: #fff;
+	background-clip: border-box;
+	border-radius: .25rem;
+	margin: 15px auto;
+	max-width: 550px;
+	min-height: 225px;
+	box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.2);
+}
+
+.card-tile {
+	background-color: #20c99773;
 	text-align: center;
 	padding: 10px;
 	margin: 10px;
-	background-color: #20c99773;
 	border: none;
 	max-width: 400px;
 	height: 125px;
@@ -34,4 +51,21 @@
 
 a:hover {
 	color: #686868;
+}
+
+.card-images {
+	border-radius: calc(.25rem - 1px);
+	width: 175px;
+	height: 175px;
+	overflow: hidden;
+	object-fit: contain;
+	padding: 10px;
+}
+
+.post-container {
+	margin: 0 auto;
+}
+
+.tile-row {
+	margin: 15px auto;
 }
