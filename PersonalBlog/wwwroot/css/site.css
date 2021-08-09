@@ -84,3 +84,12 @@ body {
     position: relative;
     z-index: 3;
 }
+
+.nav-wrapper {
+    flex-wrap: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 95%;
+    margin: 0 auto;
+}

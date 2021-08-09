@@ -7,3 +7,19 @@
 	background-repeat: no-repeat;
 	background-position: 50% 30%;
 }
+
+.card {
+	text-align: center;
+	padding: 10px;
+	margin: 10px;
+	background-color: #20c99773;
+	border: none;
+	max-width: 400px;
+	height: 125px;
+	width: 65%;
+}
+
+.card-col {
+	justify-content: center;
+	display: flex;
+}
