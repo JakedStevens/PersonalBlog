@@ -9,14 +9,18 @@ namespace PersonalBlog.ClassLibrary
 		[Key]
 		public int PostId { get; set; }
 
+		[Display(Name = "Title")]
 		public string PostTitle { get; set; }
 
+		[Display(Name = "Content")]
 		public string PostContent { get; set; }
 
+		[Display(Name = "Category")]
 		public string PostCategory { get; set; }
 
 		public string PostImageURL { get; set; }
 
+		[Display(Name = "Date Posted")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		public DateTime PostDate { get; set; }
 	}
