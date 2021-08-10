@@ -1,42 +1,38 @@
 ﻿@model PersonalBlog.ClassLibrary.BlogPost
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Post Details";
 }
 
-<h1>Details</h1>
+<div class="container mt-5">
+    <h2>@Model.PostTitle</h2>
+    <hr/>
+    <div>
+        <input type="hidden" asp-for="PostId" value="@Model.PostId" />
+        <div class="row">
+            <div class="col-4">
+                <img src="@Model.PostImageURL" class="detail-images" alt="@Model.PostTitle">
+            </div>
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-6">
+                        <strong>Category:</strong><div>@Model.PostCategory</div>
+                    </div>
+                    <div class="col-6">
+                        <strong>Post Date:</strong><div>@Model.PostDate</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>@Model.PostContent</p>
+                    </div>
+                </div>
+            </div
+        </div>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.PostId">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
 
-<div>
-    <h4>BlogPost</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PostTitle)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PostTitle)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PostContent)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PostContent)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PostCategory)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PostCategory)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PostDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PostDate)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.PostId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
