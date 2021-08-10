@@ -33,6 +33,22 @@ namespace PersonalBlog.Web.Controllers
             return View("DrumPosts", postVM);
         }
 
+        public async Task<ViewResult> Guitar()
+        {
+            List<BlogPost> posts = await _context.BlogPost.ToListAsync();
+            List<BlogPost> guitarPosts = posts.Where(post => post.PostCategory == "Guitar").ToList();
+            BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = guitarPosts };
+            return View("GuitarPosts", postVM);
+        }
+
+        public async Task<ViewResult> Engineering()
+        {
+            List<BlogPost> posts = await _context.BlogPost.ToListAsync();
+            List<BlogPost> engineeringPosts = posts.Where(post => post.PostCategory == "Engineering").ToList();
+            BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = engineeringPosts };
+            return View("EngineeringPosts", postVM);
+        }
+
         // GET: BlogPosts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
