@@ -1,12 +1,44 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
     @model PersonalBlog.Web.ViewModels.BlogPostsViewModel
+
+    string Truncate(string value, int maxChars)
+		{
+			return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "...";
+		}
 }
+
 <div class="row hero">
     @*Hero Image Container*@
 </div>
 
-@*<div class="row tile-row">
+<div class="post-container">
+
+    <h1 class="m-3 my-font text-center">Recent Posts</h1>
+    <div class="row justify-content-center">
+    @foreach (var post in @Model.Posts)
+    {
+        <div class="post-card">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="@post.PostImageURL" class="card-images" alt="@post.PostTitle">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@post.PostTitle</h5>
+                        @*<p class="card-text">@post.PostContent</p>*@
+                        <p class="card-text">@Truncate(@post.PostContent, 130)</p>
+                        <p class="card-text"><small class="text-muted">@post.PostDate.ToShortDateString()</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+</div>
+
+@* Tiles for selecting category
+<div class="row tile-row">
     <div class="col-4 card-col">
         <a class="card-link" asp-controller="BlogPosts" asp-action="Drums">
             <div class="card card-tile">
@@ -29,27 +61,3 @@
         </a>
     </div>
 </div>*@
-
-<div class="post-container">
-
-    <h1 class="m-3 my-font text-center">Recent Posts</h1>
-    <div class="row justify-content-center">
-    @foreach (var post in @Model.Posts)
-    {
-        <div class="post-card">
-            <div class="row no-gutters">
-                <div class="col-md-4">
-                    <img src="@post.PostImageURL" class="card-images" alt="@post.PostTitle">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">@post.PostTitle</h5>
-                        <p class="card-text">@post.PostContent</p>
-                        <p class="card-text"><small class="text-muted">@post.PostDate.ToShortDateString()</small></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-    </div>
-</div>

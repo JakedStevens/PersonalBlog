@@ -18,6 +18,7 @@ namespace PersonalBlog.ClassLibrary
 		[Display(Name = "Category")]
 		public string PostCategory { get; set; }
 
+		[Display(Name = "Image URL")]
 		public string PostImageURL { get; set; }
 
 		[Display(Name = "Date Posted")]

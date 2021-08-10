@@ -59,7 +59,8 @@ a:hover {
 	height: 175px;
 	overflow: hidden;
 	object-fit: contain;
-	padding: 10px;
+	object-position: center;
+	padding: 10px 10px 10px 10px;
 }
 
 .post-container {

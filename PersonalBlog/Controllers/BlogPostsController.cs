@@ -58,7 +58,7 @@ namespace PersonalBlog.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostId,PostTitle,PostContent,PostCategory,PostDate")] BlogPost blogPost)
+        public async Task<IActionResult> Create([Bind("PostId,PostTitle,PostContent,PostCategory,PostDate,PostImageURL")] BlogPost blogPost)
         {
             if (ModelState.IsValid)
             {
@@ -90,13 +90,8 @@ namespace PersonalBlog.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PostId,PostTitle,PostContent,PostCategory,PostDate")] BlogPost blogPost)
+        public async Task<IActionResult> Edit([Bind("PostId,PostTitle,PostContent,PostCategory,PostDate")] BlogPost blogPost)
         {
-            if (id != blogPost.PostId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -117,7 +112,7 @@ namespace PersonalBlog.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(blogPost);
+            return View("Index");
         }
 
         // GET: BlogPosts/Delete/5
