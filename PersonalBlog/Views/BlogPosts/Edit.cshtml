@@ -16,7 +16,11 @@
                 <input type="hidden" asp-for="PostId" />
                 <div class="form-group">
                     <label asp-for="PostCategory" class="control-label"></label>
-                    <input asp-for="PostCategory" class="form-control" />
+                       <select asp-for="PostCategory" class="form-control">
+                            <option value="Drums">Drums</option>
+                            <option value="Guitar">Guitar</option>
+                            <option value="Engineering">Engineering</option>
+                        </select>
                     <span asp-validation-for="PostCategory" class="text-danger"></span>
                 </div>
                 <div class="form-group">

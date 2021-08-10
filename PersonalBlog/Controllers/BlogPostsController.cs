@@ -90,7 +90,7 @@ namespace PersonalBlog.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("PostId,PostTitle,PostContent,PostCategory,PostDate")] BlogPost blogPost)
+        public async Task<IActionResult> Edit([Bind("PostId,PostTitle,PostContent,PostCategory,PostDate,PostImageURL")] BlogPost blogPost)
         {
             if (ModelState.IsValid)
             {
