@@ -1,6 +1,5 @@
-﻿@model IEnumerable<PersonalBlog.ClassLibrary.BlogPost>
-
-@{
+﻿@{
+    @model PersonalBlog.Web.ViewModels.BlogPostsViewModel
     ViewData["Title"] = "All Posts";
 }
 
@@ -14,33 +13,33 @@
         <thead class="thead-dark">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.PostTitle)
+                    Post Title
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PostCategory)
+                    Category
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PostDate)
+                    Post Date
                 </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-    @foreach (var item in Model) {
+    @foreach (var post in @Model.Posts) {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PostTitle)
+                    @post.PostTitle
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PostCategory)
+                    @post.PostCategory
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PostDate)
+                    @post.PostDate.ToShortDateString()
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.PostId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.PostId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.PostId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@post.PostId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@post.PostId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@post.PostId">Delete</a>
                 </td>
             </tr>
     }

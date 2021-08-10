@@ -1,5 +1,5 @@
-﻿.hero {
-	background-image: url('/images/mountains_hero.jpg');
+﻿.home-hero {
+	background-image: url('/images/studio.jpg');
 	width: 100%;
 	height: 400px;
 	margin: 0px;
@@ -54,11 +54,11 @@ a:hover {
 }
 
 .card-images {
-	border-radius: calc(.25rem - 1px);
+	border-radius: 25px;
 	width: 175px;
 	height: 175px;
 	overflow: hidden;
-	object-fit: contain;
+	object-fit: cover;
 	object-position: center;
 	padding: 10px 10px 10px 10px;
 }

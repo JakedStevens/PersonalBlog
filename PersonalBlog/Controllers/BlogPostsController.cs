@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PersonalBlog.ClassLibrary;
+using PersonalBlog.Web.ViewModels;
 
 namespace PersonalBlog.Web.Controllers
 {
@@ -19,14 +20,17 @@ namespace PersonalBlog.Web.Controllers
         // GET: BlogPosts
         public async Task<ViewResult> Index()
         {
-            return View(await _context.BlogPost.ToListAsync());
+            List<BlogPost> posts = await _context.BlogPost.ToListAsync();
+            BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
+            return View(postVM);
         }
 
         public async Task<ViewResult> Drums()
         {
             List<BlogPost> posts = await _context.BlogPost.ToListAsync();
             List<BlogPost> drumPosts = posts.Where(post => post.PostCategory == "Drums").ToList();
-            return View(drumPosts);
+            BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = drumPosts };
+            return View("DrumPosts", postVM);
         }
 
         // GET: BlogPosts/Details/5
