@@ -18,5 +18,10 @@ namespace PersonalBlog.Web.Controllers
         {
             return View("Authentication");
         }
+
+        public IActionResult Register(PersonalBlogUser user)
+        {
+            return View("Authentication");
+        }
     }
 }
