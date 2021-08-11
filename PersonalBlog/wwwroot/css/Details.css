@@ -6,3 +6,8 @@
 	object-fit: cover;
 	object-position: center;
 }
+
+.details-container {
+	margin: 100px auto 100px;
+	max-width: 1150px;
+}
