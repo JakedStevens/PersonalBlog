@@ -21,13 +21,6 @@ namespace PersonalBlog.Web.Controllers
 			_logger = logger;
 			_dbContext = dbContext;
 		}
-		
-		public async Task<ViewResult> Authentication()
-		{
-
-
-			return View();
-		}
 
 		public async Task<ViewResult> Index()
 		{
