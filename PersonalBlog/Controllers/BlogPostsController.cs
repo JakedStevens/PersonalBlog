@@ -10,24 +10,24 @@ namespace PersonalBlog.Web.Controllers
 {
 	public class BlogPostsController : Controller
     {
-        private readonly PersonalBlogDbContext _context;
+        private readonly PersonalBlogDbContext _dbContext;
 
-        public BlogPostsController(PersonalBlogDbContext context)
+        public BlogPostsController(PersonalBlogDbContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
         }
 
         // GET: BlogPosts
         public async Task<ViewResult> Index()
         {
-            List<BlogPost> posts = await _context.BlogPost.ToListAsync();
+            List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
             BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
             return View(postVM);
         }
 
         public async Task<ViewResult> Drums()
         {
-            List<BlogPost> posts = await _context.BlogPost.ToListAsync();
+            List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
             List<BlogPost> drumPosts = posts.Where(post => post.PostCategory == "Drums").ToList();
             BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = drumPosts };
             return View("DrumPosts", postVM);
@@ -35,7 +35,7 @@ namespace PersonalBlog.Web.Controllers
 
         public async Task<ViewResult> Guitar()
         {
-            List<BlogPost> posts = await _context.BlogPost.ToListAsync();
+            List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
             List<BlogPost> guitarPosts = posts.Where(post => post.PostCategory == "Guitar").ToList();
             BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = guitarPosts };
             return View("GuitarPosts", postVM);
@@ -43,7 +43,7 @@ namespace PersonalBlog.Web.Controllers
 
         public async Task<ViewResult> Engineering()
         {
-            List<BlogPost> posts = await _context.BlogPost.ToListAsync();
+            List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
             List<BlogPost> engineeringPosts = posts.Where(post => post.PostCategory == "Engineering").ToList();
             BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = engineeringPosts };
             return View("EngineeringPosts", postVM);
@@ -53,7 +53,7 @@ namespace PersonalBlog.Web.Controllers
         {
             if(!string.IsNullOrWhiteSpace(searchInput))
             {
-                List<BlogPost> posts = await _context.BlogPost.ToListAsync();
+                List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
                 List<BlogPost> filteredPosts = posts.Where(post => post.PostTitle.ToLower().Contains(searchInput.ToLower())).ToList();
                 BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = filteredPosts };
                 return View("PostSearch", postVM);
@@ -74,7 +74,7 @@ namespace PersonalBlog.Web.Controllers
                 return NotFound();
             }
 
-            var blogPost = await _context.BlogPost
+            var blogPost = await _dbContext.BlogPost
                 .FirstOrDefaultAsync(m => m.PostId == id);
             if (blogPost == null)
             {
@@ -97,8 +97,8 @@ namespace PersonalBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(blogPost);
-                await _context.SaveChangesAsync();
+                _dbContext.Add(blogPost);
+                await _dbContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(blogPost);
@@ -112,7 +112,7 @@ namespace PersonalBlog.Web.Controllers
                 return NotFound();
             }
 
-            var blogPost = await _context.BlogPost.FindAsync(id);
+            var blogPost = await _dbContext.BlogPost.FindAsync(id);
             if (blogPost == null)
             {
                 return NotFound();
@@ -129,8 +129,8 @@ namespace PersonalBlog.Web.Controllers
             {
                 try
                 {
-                    _context.Update(blogPost);
-                    await _context.SaveChangesAsync();
+                    _dbContext.Update(blogPost);
+                    await _dbContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -156,7 +156,7 @@ namespace PersonalBlog.Web.Controllers
                 return NotFound();
             }
 
-            var blogPost = await _context.BlogPost
+            var blogPost = await _dbContext.BlogPost
                 .FirstOrDefaultAsync(m => m.PostId == id);
             if (blogPost == null)
             {
@@ -171,15 +171,15 @@ namespace PersonalBlog.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var blogPost = await _context.BlogPost.FindAsync(id);
-            _context.BlogPost.Remove(blogPost);
-            await _context.SaveChangesAsync();
+            var blogPost = await _dbContext.BlogPost.FindAsync(id);
+            _dbContext.BlogPost.Remove(blogPost);
+            await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool BlogPostExists(int id)
         {
-            return _context.BlogPost.Any(e => e.PostId == id);
+            return _dbContext.BlogPost.Any(e => e.PostId == id);
         }
     }
 }

@@ -9,20 +9,20 @@ namespace PersonalBlog.ClassLibrary
 {
     public class UserIdentifier
     {
-		private readonly PersonalBlogDbContext _context;
+		private readonly PersonalBlogDbContext _dbContext;
 
-		public UserIdentifier(PersonalBlogDbContext context)
+		public UserIdentifier(PersonalBlogDbContext dbContext)
 		{
-			_context = context;
+			_dbContext = dbContext;
 		}
 
-		public PersonalBlogUser GetDealerLeadUser(ClaimsPrincipal user)
+		public PersonalBlogUser GetBlogUser(ClaimsPrincipal user)
 		{
 			var userOid = Guid.Parse(user.Claims.ToList().FirstOrDefault(claim =>
 				claim.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier"
 			).Value);
 
-			return _context.PersonalBlogUser.FirstOrDefault(x => x.AzureADId == userOid);
+			return _dbContext.PersonalBlogUser.FirstOrDefault(x => x.AzureADId == userOid);
 		}
 	}
 }
