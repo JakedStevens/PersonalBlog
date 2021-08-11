@@ -21,17 +21,16 @@
     <header class="my-header">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="nav-wrapper">
-              <div class="navbar-brand my-font">A Music Blog</div>
+               <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">
+                   <span class="my-font logo">A Music Blog</span>
+               </a>
+              
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
 
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-
-                  <li class="nav-item active">
-                    <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
-                  </li>
 
                   <li class="nav-item active">
                     <a class="nav-link text-dark" asp-controller="BlogPosts" asp-action="Index">All Posts</a>
@@ -52,12 +51,16 @@
                 </ul>
                 @using (Html.BeginForm("Search", "BlogPosts", FormMethod.Post))
                     {
-                        <div class="form-inline my-2 my-lg-0">
-                            <input name="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search">
-                            <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+                        <div class="input-group">
+                          <input name="searchInput" type="search" class="form-control" placeholder="Search">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Search</button>
+                          </div>
                         </div>
-                        
                     }
+                    <a class="nav-link" asp-controller="Home" asp-action="Authentication">
+                        <img src="images/nounUser.png" class="user-icon" alt="users">
+                    </a>
               </div>
             </div>
         </nav>
