@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="~/css/GuitarPosts.css" />
     <link rel="stylesheet" href="~/css/EngineeringPosts.css" />
     <link rel="stylesheet" href="~/css/Details.css" />
+    <link rel="stylesheet" href="~/css/PostSearch.css" />
 </head>
 <body>
     <header class="my-header">
@@ -49,10 +50,18 @@
                   </li>
 
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
+                @using (Html.BeginForm("Search", "BlogPosts", FormMethod.Post))
+                    {
+                        <div class="form-inline my-2 my-lg-0">
+                            <input name="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search">
+                            <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+                        </div>
+                        
+                    }
+                @*<form class="form-inline my-2 my-lg-0">
                   <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                   <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-                </form>
+                </form>*@
               </div>
             </div>
         </nav>

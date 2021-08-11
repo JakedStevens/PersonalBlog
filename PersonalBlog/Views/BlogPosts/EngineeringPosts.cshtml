@@ -14,23 +14,25 @@
 <div class="post-container">
 
     <h1 class="m-3 my-font text-center">Engineering Posts</h1>
-    <div class="row justify-content-center">
+    <div class="row cc">
     @foreach (var post in @Model.Posts)
     {
-        <div class="post-card">
-            <div class="row no-gutters">
-                <div class="col-md-4">
-                    <img src="@post.PostImageURL" class="card-images" alt="@post.PostTitle">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">@post.PostTitle</h5>
-                        <p class="card-text">@Truncate(@post.PostContent, 120)</p>
-                        <p class="card-text"><small class="text-muted">@post.PostDate.ToShortDateString()</small></p>
+        <a class="card-link" asp-controller="BlogPosts" asp-action="Details" asp-route-id="@post.PostId">
+            <div class="post-card">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="@post.PostImageURL" class="card-images" alt="@post.PostTitle">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@post.PostTitle</h5>
+                            <p class="card-text">@Truncate(@post.PostContent, 120)</p>
+                            <p class="card-text"><small class="text-muted">@post.PostDate.ToShortDateString()</small></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     }
     </div>
 </div>

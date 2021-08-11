@@ -49,6 +49,23 @@ namespace PersonalBlog.Web.Controllers
             return View("EngineeringPosts", postVM);
         }
 
+        public async Task<ViewResult> Search(string searchInput)
+        {
+            if(!string.IsNullOrWhiteSpace(searchInput))
+            {
+                List<BlogPost> posts = await _context.BlogPost.ToListAsync();
+                List<BlogPost> filteredPosts = posts.Where(post => post.PostTitle.ToLower().Contains(searchInput.ToLower())).ToList();
+                BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = filteredPosts };
+                return View("PostSearch", postVM);
+            }
+            else
+            {
+                BlogPostsViewModel postVM = new BlogPostsViewModel();
+                return View("PostSearch", postVM);
+            }
+            
+        }
+
         // GET: BlogPosts/Details/5
         public async Task<IActionResult> Details(int? id)
         {

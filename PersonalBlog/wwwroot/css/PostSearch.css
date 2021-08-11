@@ -1,0 +1,9 @@
+﻿.search-posts-hero {
+	background-image: url('/images/counterpartsLive.jpg');
+	width: 100%;
+	height: 400px;
+	margin: 0px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50% 55%;
+}

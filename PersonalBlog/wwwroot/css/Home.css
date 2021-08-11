@@ -38,15 +38,14 @@
 	justify-content: center;
 }
 
-.card-col {
-	justify-content: center;
-	display: flex;
-}
-
 .card-link {
 	all: unset;
 	cursor: pointer;
-	width: 65%;
+}
+
+.card-col {
+	justify-content: center;
+	display: flex;
 }
 
 a:hover {
