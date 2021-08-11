@@ -66,7 +66,7 @@ namespace PersonalBlog.Web.Controllers
             
         }
 
-        // GET: BlogPosts/Details/5
+        // GET: BlogPosts/Details/{id}
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -91,8 +91,6 @@ namespace PersonalBlog.Web.Controllers
         }
 
         // POST: BlogPosts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PostId,PostTitle,PostContent,PostCategory,PostDate,PostImageURL")] BlogPost blogPost)
@@ -106,7 +104,7 @@ namespace PersonalBlog.Web.Controllers
             return View(blogPost);
         }
 
-        // GET: BlogPosts/Edit/5
+        // GET: BlogPosts/Edit/{id}
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -122,9 +120,7 @@ namespace PersonalBlog.Web.Controllers
             return View(blogPost);
         }
 
-        // POST: BlogPosts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: BlogPosts/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("PostId,PostTitle,PostContent,PostCategory,PostDate,PostImageURL")] BlogPost blogPost)
@@ -152,7 +148,7 @@ namespace PersonalBlog.Web.Controllers
             return View("Index");
         }
 
-        // GET: BlogPosts/Delete/5
+        // GET: BlogPosts/Delete/{id}
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -170,7 +166,7 @@ namespace PersonalBlog.Web.Controllers
             return View(blogPost);
         }
 
-        // POST: BlogPosts/Delete/5
+        // POST: BlogPosts/Delete/{id}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
