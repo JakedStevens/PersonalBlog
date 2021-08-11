@@ -10,24 +10,19 @@ namespace PersonalBlog.ClassLibrary
 {
     public class PersonalBlogUser
     {
-        //[Key]
-        //[Column("UserId")]
-        //public int Id { get; set; }
-
-        //[Column("AzureADId")]
-        //public Guid AzureADId { get; set; }
-
-        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        //public DateTime? CreateDate { get; set; }
-
         [Key]
         [Column("UserId")]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Name is required")]
-        [StringLength(40)]
-        [Column("UserName")]
-        public string Name { get; set; }
+        [Required(ErrorMessage = "First name is required")]
+        [StringLength(20)]
+        [Column("FirstName")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last name is required")]
+        [StringLength(20)]
+        [Column("LastName")]
+        public string LastName { get; set; }
 
         [EmailAddress(ErrorMessage = "Invalid email address")]
         [Required(ErrorMessage = "Email is required")]
