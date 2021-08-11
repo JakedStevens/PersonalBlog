@@ -1,9 +1,8 @@
-﻿.detail-images {
-	border-radius: 25px;
-	width: 175px;
-	height: 175px;
+﻿
+.detail-images {
+	width: 100%;
+	height: 300px;
 	overflow: hidden;
 	object-fit: cover;
 	object-position: center;
-	padding: 10px 10px 10px 10px;
 }

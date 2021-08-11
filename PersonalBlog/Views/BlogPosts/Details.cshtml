@@ -1,38 +1,38 @@
-﻿@model PersonalBlog.ClassLibrary.BlogPost
-
-@{
+﻿@{
+    @model PersonalBlog.ClassLibrary.BlogPost
     ViewData["Title"] = "Post Details";
 }
 
 <div class="container mt-5">
-    <h2>@Model.PostTitle</h2>
+    <div class="row">
+        <div class="col-4">
+            <strong>Category:</strong><div>@Model.PostCategory</div>
+        </div>
+        <div class="col-4">
+            <strong>Post Date:</strong><div>@Model.PostDate.ToShortDateString()</div>
+        </div>
+        <div class="col-4">
+            <a class="btn btn-dark" asp-action="Edit" asp-route-id="@Model.PostId">Edit</a>
+            <a class="btn btn-outline-dark" asp-action="Index">Back to List</a>
+        </div>
+    </div>
+    
     <hr/>
     <div>
         <input type="hidden" asp-for="PostId" value="@Model.PostId" />
         <div class="row">
-            <div class="col-4">
+            <div class="col">
                 <img src="@Model.PostImageURL" class="detail-images" alt="@Model.PostTitle">
             </div>
-            <div class="col-8">
-                <div class="row">
-                    <div class="col-6">
-                        <strong>Category:</strong><div>@Model.PostCategory</div>
-                    </div>
-                    <div class="col-6">
-                        <strong>Post Date:</strong><div>@Model.PostDate</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <p>@Model.PostContent</p>
-                    </div>
-                </div>
-            </div
         </div>
-    </div>
-    <div>
-        <a asp-action="Edit" asp-route-id="@Model.PostId">Edit</a> |
-        <a asp-action="Index">Back to List</a>
+        <div class="row justify-content-center m-3">
+            <h2>@Model.PostTitle</h2>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>@Model.PostContent</p>
+            </div>
+        </div>
     </div>
 </div>
 
