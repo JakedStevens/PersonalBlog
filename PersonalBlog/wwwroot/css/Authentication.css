@@ -22,3 +22,17 @@
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 }
+
+.validation-text {
+	color: red;
+	font-size: 12px;
+	margin-bottom: 0px;
+}
+
+#login-btn {
+	margin-top: 10px;
+}
+
+#reg-btn {
+	margin-top: 10px;
+}

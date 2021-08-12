@@ -9,12 +9,12 @@
             <h1 class="my-font">Sign In</h1>
             <form asp-controller="User" asp-action="SignIn">
                 <div class="form-group">
-                    <label class="control-label">Email</label>
+                    <label class="control-label">Email<span style="color: red"> *</span></label>
                     <input id="login-email" name="Email" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                     <div class="input-group mb-3">
-                      <label class="control-label w-100">Password</label>
+                      <label class="control-label w-100">Password<span style="color: red"> *</span></label>
                       <input id="login-password" name="Password" type="password" class="pass-input form-control">
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="show-pass-btn">
@@ -23,6 +23,8 @@
                       </div>
                     </div>
                 </div>
+                <p id="login-email-val" class="validation-text" hidden>Email Required</p>
+                <p id="login-pass-val" class="validation-text" hidden>Password Required</p>
                 <button id="login-btn" type="submit" class="btn disabled-btn" disabled>Login</button>
             </form>
         </div>
@@ -30,25 +32,31 @@
             <h1 class="my-font">Register</h1>
             <form asp-controller="User" asp-action="Register">
                 <div class="form-group">
-                    <label class="control-label">First Name</label>
+                    <label class="control-label">First Name<span style="color: red"> *</span></label>
                     <input id="reg-firstname" name="FirstName" type="text" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Last Name</label>
+                    <label class="control-label">Last Name<span style="color: red"> *</span></label>
                     <input id="reg-lastname" name="LastName" type="text" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Email</label>
+                    <label class="control-label">Email<span style="color: red"> *</span></label>
                     <input id="reg-email" name="Email" type="text" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Password</label>
+                    <label class="control-label">Password<span style="color: red"> *</span></label>
                     <input id="reg-password" name="Password" type="password" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Confirm Password</label>
+                    <label class="control-label">Confirm Password<span style="color: red"> *</span></label>
                     <input id="reg-confirm-password" type="password" class="form-control">
                 </div>
+                <p id="reg-fn-val" class="validation-text" hidden>First Name Required</p>
+                <p id="reg-ln-val" class="validation-text" hidden>Last Name Required</p>
+                <p id="reg-email-val" class="validation-text" hidden>Email Required</p>
+                <p id="reg-pass-val" class="validation-text" hidden>Password Required</p>
+                <p id="reg-cp-val" class="validation-text" hidden>Confirm Password Required</p>
+
                 <button id="reg-btn" type="submit" class="btn disabled-btn" disabled>Register</button>
             </form>
         </div>
@@ -58,45 +66,95 @@
 <script>
 $(function() {
     var elementClicked = false;   
-    $("#show-pass-btn").click(function(){
+    $('#show-pass-btn').click(function(){
        elementClicked = !elementClicked;
-       elementClicked ? $("#login-password").attr("type", "text") : $("#login-password").attr("type", "password");
+       elementClicked ? $('#login-password').attr('type', 'text') : $('#login-password').attr('type', 'password');
     });
 
-    var loginEmailInput = $("#login-email");
-    var loginPassInput = $("#login-password");
-    var loginBtn = $("#login-btn");
+    //Start Login Form Validation
+    var loginEmailInput = $('#login-email');
+    var loginPassInput = $('#login-password');
+    var loginBtn = $('#login-btn');
+    var loginEmailValMsg = $('#login-email-val');
+    var loginPassValMsg = $('#login-pass-val');
 
-    function CheckLogin() {
-        if (loginEmailInput.val() || loginPassInput.val()) {
-            loginBtn.removeClass("disabled-btn");
-            loginBtn.removeAttr("disabled");
-            loginBtn.addClass("btn-success")
+    function CheckLoginKeyUp() {
+        if (!loginEmailInput.val() || !loginPassInput.val()) {
+            loginBtn.removeClass('btn-success');
+            loginBtn.addClass('disabled-btn');
+            loginBtn.prop('disabled', true);
         } else {
-            loginBtn.addClass("disabled-btn");
-            loginBtn.addAttr("disabled");
-            loginBtn.removeClass("btn-success")
+            loginBtn.removeClass('disabled-btn');
+            loginBtn.prop('disabled', false);
+            loginBtn.addClass('btn-success');
         }
     }
+    function CheckLoginEmailBlur() {
+        loginEmailInput.val() ? loginEmailValMsg.prop('hidden', true) : loginEmailValMsg.prop('hidden', false);
+    }
 
-
-
+    function CheckLoginPassBlur() {
+        loginPassInput.val() ? loginPassValMsg.prop('hidden', true) : loginPassValMsg.prop('hidden', false);
+    }
     loginEmailInput.on({
-        blur: function() {
-            CheckLogin();
-        },
-        keyup: function() {
-            CheckLogin();
-        }
+        blur: function() { CheckLoginEmailBlur(); },
+        keyup: function() { CheckLoginKeyUp(); }
     });
         loginPassInput.on({
-        blur: function() {
-            CheckLogin();
-        },
-        keyup: function() {
-            CheckLogin();
-        }
+        blur: function() { CheckLoginPassBlur(); },
+        keyup: function() { CheckLoginKeyUp(); }
     });
+    //End Login Form Validation
+
+
+    //Start Register Form Validation
+    var regFnInput = $('#reg-firstname');
+    var regLnInput = $('#reg-lastname');
+    var regEmailInput = $('reg-email');
+    var regPassInput = $('reg-password');
+    var regPassConfInput = $('#reg-confirm-password');
+    var regBtn = $('#reg-btn');
+    var regFnValMsg = $('#reg-fn-val');
+    var regLnValMsg = $('#reg-ln-val');
+    var regEmailValMsg = $('#reg-email-val');
+    var regPassValMsg = $('#reg-pass-val');
+    var regCpValMsg = $('#reg-cp-val');
+
+    function CheckRegKeyUp() {
+        if (!regFnInput.val() || !regLnInput.val() || !regLnInput.val() || !regLnInput.val() || !regLnInput.val()) {
+            regBtn.removeClass('btn-success');
+            regBtn.addClass('disabled-btn');
+            regBtn.prop('disabled', true);
+        } else {
+            regBtn.removeClass('disabled-btn');
+            regBtn.prop('disabled', false);
+            regBtn.addClass('btn-success');
+        }
+    }
+    function CheckRegFnBlur() {
+        loginPassInput.val() ? loginPassValMsg.prop('hidden', true) : loginPassValMsg.prop('hidden', false);
+    }
+    function CheckRegLnBlur() {
+        loginPassInput.val() ? loginPassValMsg.prop('hidden', true) : loginPassValMsg.prop('hidden', false);
+    }
+    function CheckRegEmailBlur() {
+        loginEmailInput.val() ? loginEmailValMsg.prop('hidden', true) : loginEmailValMsg.prop('hidden', false);
+    }
+    function CheckRegPassBlur() {
+        loginPassInput.val() ? loginPassValMsg.prop('hidden', true) : loginPassValMsg.prop('hidden', false);
+    }
+    function CheckRegCpBlur() {
+        loginPassInput.val() ? loginPassValMsg.prop('hidden', true) : loginPassValMsg.prop('hidden', false);
+    }
+    regFnInput.on({
+        blur: function() { CheckRegFnBlur(); },
+        keyup: function() { CheckRegKeyUp(); }
+    });
+        loginPassInput.on({
+        blur: function() { CheckRegPassBlur(); },
+        keyup: function() { CheckRegKeyUp(); }
+    });
+    //End Login Form Validation
 });
 
 
