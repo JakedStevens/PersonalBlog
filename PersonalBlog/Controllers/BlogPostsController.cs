@@ -22,7 +22,7 @@ namespace PersonalBlog.Web.Controllers
         {
             List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
             BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
-            return View(postVM);
+            return View("AllPosts", postVM);
         }
 
         public async Task<ViewResult> Drums()

@@ -10,7 +10,11 @@
     <div class="row">
         <div class="col-12 col-md-6">
             <h1 class="my-font">Sign In</h1>
-            <form asp-controller="User" asp-action="SignIn">
+            @using (Html.BeginForm("Search", "BlogPosts", FormMethod.Post))
+            {
+
+            }
+            @*<form asp-controller="User" asp-action="SignIn">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Email" class="control-label"></label>
@@ -23,11 +27,11 @@
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <button type="submit" class="btn btn-success">Login</button>
-            </form>
+            </form>*@
         </div>
         <div class="col-12 col-md-6">
             <h1 class="my-font">Register</h1>
-            <form asp-controller="User" asp-action="Register">
+            @*<form asp-controller="User" asp-action="Register">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="FirstName" class="control-label"></label>
@@ -55,7 +59,7 @@
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
                 <button type="submit" class="btn btn-outline-success">Register</button>
-            </form>
+            </form>*@
         </div>
     </div>
 </div>
