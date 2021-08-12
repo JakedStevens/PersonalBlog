@@ -56,122 +56,12 @@
                 <p id="reg-email-val" class="validation-text" hidden>Email Required</p>
                 <p id="reg-pass-val" class="validation-text" hidden>Password Required</p>
                 <p id="reg-cp-val" class="validation-text" hidden>Confirm Password Required</p>
-
+                <p id="reg-match-val" class="validation-text" hidden>Passwords Dont Match</p>
+                <p id="reg-Pl-val" class="validation-text" hidden>Password Must Be At Least 7 Characters</p>
                 <button id="reg-btn" type="submit" class="btn disabled-btn" disabled>Register</button>
             </form>
         </div>
     </div>
 </div>
 
-<script>
-$(function() {
-    var elementClicked = false;   
-    $('#show-pass-btn').click(function(){
-       elementClicked = !elementClicked;
-       elementClicked ? $('#login-password').attr('type', 'text') : $('#login-password').attr('type', 'password');
-    });
-
-    //Start Login Form Validation
-    var loginEmailInput = $('#login-email');
-    var loginPassInput = $('#login-password');
-    var loginBtn = $('#login-btn');
-    var loginEmailValMsg = $('#login-email-val');
-    var loginPassValMsg = $('#login-pass-val');
-
-    function CheckLoginKeyUp() {
-        if (!loginEmailInput.val() || !loginPassInput.val()) {
-            loginBtn.removeClass('btn-success');
-            loginBtn.addClass('disabled-btn');
-            loginBtn.prop('disabled', true);
-        } else {
-            loginBtn.removeClass('disabled-btn');
-            loginBtn.prop('disabled', false);
-            loginBtn.addClass('btn-success');
-        }
-    }
-    function CheckLoginEmailBlur() {
-        loginEmailInput.val() ? loginEmailValMsg.prop('hidden', true) : loginEmailValMsg.prop('hidden', false);
-    }
-
-    function CheckLoginPassBlur() {
-        loginPassInput.val() ? loginPassValMsg.prop('hidden', true) : loginPassValMsg.prop('hidden', false);
-    }
-    loginEmailInput.on({
-        blur: function() { CheckLoginEmailBlur(); },
-        keyup: function() { CheckLoginKeyUp(); }
-    });
-        loginPassInput.on({
-        blur: function() { CheckLoginPassBlur(); },
-        keyup: function() { CheckLoginKeyUp(); }
-    });
-    //End Login Form Validation
-
-
-    //Start Register Form Validation
-    var regFnInput = $('#reg-firstname');
-    var regLnInput = $('#reg-lastname');
-    var regEmailInput = $('reg-email');
-    var regPassInput = $('reg-password');
-    var regPassConfInput = $('#reg-confirm-password');
-    var regBtn = $('#reg-btn');
-    var regFnValMsg = $('#reg-fn-val');
-    var regLnValMsg = $('#reg-ln-val');
-    var regEmailValMsg = $('#reg-email-val');
-    var regPassValMsg = $('#reg-pass-val');
-    var regCpValMsg = $('#reg-cp-val');
-
-    function CheckRegKeyUp() {
-        if (!regFnInput.val() || !regLnInput.val() || !regLnInput.val() || !regLnInput.val() || !regLnInput.val() || !DoPassMatch()) {
-            regBtn.removeClass('btn-success');
-            regBtn.addClass('disabled-btn');
-            regBtn.prop('disabled', true);
-        } else {
-            regBtn.removeClass('disabled-btn');
-            regBtn.prop('disabled', false);
-            regBtn.addClass('btn-success');
-        }
-    }
-    function CheckRegFnBlur() {
-        loginPassInput.val() ? loginPassValMsg.prop('hidden', true) : loginPassValMsg.prop('hidden', false);
-    }
-    function CheckRegLnBlur() {
-        loginPassInput.val() ? loginPassValMsg.prop('hidden', true) : loginPassValMsg.prop('hidden', false);
-    }
-    function CheckRegEmailBlur() {
-        loginEmailInput.val() ? loginEmailValMsg.prop('hidden', true) : loginEmailValMsg.prop('hidden', false);
-    }
-    function CheckRegPassBlur() {
-        loginPassInput.val() ? loginPassValMsg.prop('hidden', true) : loginPassValMsg.prop('hidden', false);
-    }
-    function CheckRegCpBlur() {
-        loginPassInput.val() ? loginPassValMsg.prop('hidden', true) : loginPassValMsg.prop('hidden', false);
-    }
-    function DoPassMatch() {
-        //if (regPassInput === regPassConfInput)
-            regPassInput === regPassConfInput ? true : false;
-    }
-    regFnInput.on({
-        blur: function() { CheckRegFnBlur(); },
-        keyup: function() { CheckRegKeyUp(); }
-    });
-    regLnInput.on({
-        blur: function() { CheckRegLnBlur(); },
-        keyup: function() { CheckRegKeyUp(); }
-    });
-    regEmailInput.on({
-        blur: function() { CheckRegEmailBlur(); },
-        keyup: function() { CheckRegKeyUp(); }
-    });
-    regPassInput.on({
-        blur: function() { CheckRegPassBlur(); },
-        keyup: function() { CheckRegKeyUp(); }
-    });
-    regPassConfInput.on({
-        blur: function() { CheckRegCpBlur(); },
-        keyup: function() { CheckRegKeyUp(); }
-    });
-    //End Register Form Validation
-});
-
-
-</script>
+<script src="~/js/inputValidation.js"></script>
