@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="~/css/Delete.css" />
     <link rel="stylesheet" href="~/css/PostSearch.css" />
     <link rel="stylesheet" href="~/css/Authentication.css" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <header class="my-header">
@@ -81,8 +84,6 @@
             &copy; 2021 - Blogarino
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
