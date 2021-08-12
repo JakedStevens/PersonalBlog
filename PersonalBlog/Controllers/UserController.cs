@@ -29,7 +29,7 @@ namespace PersonalBlog.Web.Controllers
 
 		public async Task<ViewResult> SignIn([Bind("Email,Password")] PersonalBlogLoginUser user)
         {
-
+			
 			//List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
 			//BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
 			//return View("../Home/Index", postVM);
@@ -39,6 +39,8 @@ namespace PersonalBlog.Web.Controllers
 
         public IActionResult Register([Bind("FirstName,LastName,Email,Password")] PersonalBlogUser user)
         {
+			
+
             return View("Authentication");
         }
     }
