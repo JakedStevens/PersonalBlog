@@ -121,7 +121,7 @@ $(function() {
     var regCpValMsg = $('#reg-cp-val');
 
     function CheckRegKeyUp() {
-        if (!regFnInput.val() || !regLnInput.val() || !regLnInput.val() || !regLnInput.val() || !regLnInput.val()) {
+        if (!regFnInput.val() || !regLnInput.val() || !regLnInput.val() || !regLnInput.val() || !regLnInput.val() || !DoPassMatch()) {
             regBtn.removeClass('btn-success');
             regBtn.addClass('disabled-btn');
             regBtn.prop('disabled', true);
@@ -146,15 +146,31 @@ $(function() {
     function CheckRegCpBlur() {
         loginPassInput.val() ? loginPassValMsg.prop('hidden', true) : loginPassValMsg.prop('hidden', false);
     }
+    function DoPassMatch() {
+        //if (regPassInput === regPassConfInput)
+            regPassInput === regPassConfInput ? true : false;
+    }
     regFnInput.on({
         blur: function() { CheckRegFnBlur(); },
         keyup: function() { CheckRegKeyUp(); }
     });
-        loginPassInput.on({
+    regLnInput.on({
+        blur: function() { CheckRegLnBlur(); },
+        keyup: function() { CheckRegKeyUp(); }
+    });
+    regEmailInput.on({
+        blur: function() { CheckRegEmailBlur(); },
+        keyup: function() { CheckRegKeyUp(); }
+    });
+    regPassInput.on({
         blur: function() { CheckRegPassBlur(); },
         keyup: function() { CheckRegKeyUp(); }
     });
-    //End Login Form Validation
+    regPassConfInput.on({
+        blur: function() { CheckRegCpBlur(); },
+        keyup: function() { CheckRegKeyUp(); }
+    });
+    //End Register Form Validation
 });
 
 
