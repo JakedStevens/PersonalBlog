@@ -8,5 +8,6 @@ namespace PersonalBlog.ClassLibrary
             => options.UseSqlServer("Server=.;Database=PersonalBlog;Trusted_Connection=True");
 
         public DbSet<BlogPost> BlogPost { get; set; }
+        public DbSet<PersonalBlogUser> PersonalBlogUser { get; set; }
     }
 }

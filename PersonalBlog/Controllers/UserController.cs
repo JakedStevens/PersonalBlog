@@ -8,18 +8,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace PersonalBlog.Web.Controllers
 {
     public class UserController : Controller
 	{
 		private readonly PersonalBlogDbContext _dbContext;
-		private readonly ILogger<HomeController> _logger;
+		private readonly UserAuth _auth;
 
-		public UserController(ILogger<HomeController> logger, PersonalBlogDbContext dbContext)
+		public UserController(UserAuth auth, PersonalBlogDbContext dbContext)
 		{
-			_logger = logger;
 			_dbContext = dbContext;
+			_auth = auth;
 		}
 
 		public IActionResult Index()
@@ -30,18 +31,20 @@ namespace PersonalBlog.Web.Controllers
 		public async Task<ViewResult> SignIn([Bind("Email,Password")] PersonalBlogLoginUser user)
         {
 			
-			//List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
-			//BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
-			//return View("../Home/Index", postVM);
+			bool areCredentialsValid = _auth.AreCredentialsValid(user);
 
-			return View("Authentication");
-		}
+			List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
+            BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
+            return View("../Home/Index", postVM);
+        }
 
-        public IActionResult Register([Bind("FirstName,LastName,Email,Password")] PersonalBlogUser user)
+        public async Task<ViewResult> Register([Bind("FirstName,LastName,Email,Password")] PersonalBlogUser user)
         {
-			
+			await _auth.CreateUser(user);
 
-            return View("Authentication");
+			List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
+            BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
+            return View("../Home/Index", postVM);
         }
     }
 }

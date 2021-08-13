@@ -23,6 +23,7 @@ namespace PersonalBlog.Web
 		{
 			services.AddControllersWithViews();
 			services.AddTransient<PersonalBlogDbContext>();
+			services.AddScoped<UserAuth>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

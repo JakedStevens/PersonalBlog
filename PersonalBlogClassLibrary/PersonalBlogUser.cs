@@ -29,5 +29,8 @@ namespace PersonalBlog.ClassLibrary
 
         [Column("Password")]
         public string Password { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedOn { get; set; }
     }
 }
