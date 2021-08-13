@@ -79,8 +79,8 @@ namespace PersonalBlog.Web.Controllers
 				//SignInRegisterViewModel srVM = new SignInRegisterViewModel();
 				//srVM.Successful = false;
 				//srVM.Message = "The email or password you entered was incorrect.";
-				//return View("Authentication", srVM);
-			}
+				return View("Authentication");
+            }
 			
         }
 
