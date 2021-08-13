@@ -13,7 +13,7 @@ namespace PersonalBlog.ClassLibrary
             _dbContext = dbContext;
         }
 
-        public async Task<int> CreateUser(PersonalBlogUser user)
+        public async Task<int> CreateUser(UserRegister user)
         {
             string hashedPassword = Crypto.HashPassword(user.Password);
             user.Password = hashedPassword;
@@ -22,23 +22,16 @@ namespace PersonalBlog.ClassLibrary
             return await _dbContext.SaveChangesAsync();
         }
 
-        public bool AreCredentialsValid(PersonalBlogLoginUser user)
+        public bool AreCredentialsValid(UserLogin user)
         {
-            if (user == null)
-            {
-                return false;
-            }
-            else
-            {
-                PersonalBlogUser retrievedUser = _dbContext.PersonalBlogUser.SingleOrDefault(record => record.Email == user.Email);
+            PersonalBlogUser retrievedUser = _dbContext.PersonalBlogUser.SingleOrDefault(record => record.Email == user.Email);
 
-                string savedHashedPassword = retrievedUser.Password;
+            string savedHashedPassword = retrievedUser.Password;
 
-                return Crypto.VerifyHashedPassword(savedHashedPassword, user.Password);
-            }
+            return Crypto.VerifyHashedPassword(savedHashedPassword, user.Password);
         }
 
-        public PersonalBlogUser GetUserInfo(PersonalBlogLoginUser user)
+        public PersonalBlogUser GetUserInfo(UserLogin user)
         {
             return _dbContext.PersonalBlogUser.SingleOrDefault(record => record.Email == user.Email);
         }

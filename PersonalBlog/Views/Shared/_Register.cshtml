@@ -1,0 +1,31 @@
+﻿@model PersonalBlog.ClassLibrary.UserRegister
+
+<form asp-controller="User" asp-action="Register">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="FirstName" class="control-label"><span style="color: red"> *</span></label>
+        <input asp-for="FirstName" type="text" class="form-control">
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName" class="control-label"><span style="color: red"> *</span></label>
+        <input asp-for="LastName" type="text" class="form-control">
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"><span style="color: red"> *</span></label>
+        <input asp-for="Email" type="text" class="form-control">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="control-label"><span style="color: red"> *</span></label>
+        <input asp-for="Password" type="text" class="form-control">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword" class="control-label"><span style="color: red"> *</span></label>
+        <input asp-for="ConfirmPassword" type="text" class="form-control">
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-outline-success">Register</button>
+</form>

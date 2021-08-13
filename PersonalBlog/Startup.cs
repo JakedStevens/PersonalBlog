@@ -40,8 +40,8 @@ namespace PersonalBlog.Web
 					options.Cookie.SecurePolicy = _env.IsDevelopment() ? CookieSecurePolicy.None : CookieSecurePolicy.Always;
 					options.Cookie.SameSite = SameSiteMode.Lax;
 					options.Cookie.Name = "Blog.AuthCookie";
-					options.LoginPath = "/User/SignIn";
-					options.LogoutPath = "/User/SignOut";
+					options.LoginPath = "/User/Login";
+					options.LogoutPath = "/User/Logout";
 				});
 			services.Configure<CookiePolicyOptions>(options =>
 			{

@@ -10,15 +10,13 @@ namespace PersonalBlog.ClassLibrary
         [Column("UserId")]
         public int Id { get; set; }
 
-        [StringLength(25)]
         [Column("FirstName")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-		[StringLength(25)]
 		[Column("LastName")]
 		[Display(Name = "Last Name")]
-		public string LastName { get; set; }
+        public string LastName { get; set; }
 
         [Column("Email")]
         public string Email { get; set; }

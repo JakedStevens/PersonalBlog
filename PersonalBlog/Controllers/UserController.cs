@@ -14,7 +14,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Linq;
 using Microsoft.Extensions.Caching.Memory;
-using System.Runtime.Intrinsics.X86;
 
 namespace PersonalBlog.Web.Controllers
 {
@@ -34,11 +33,10 @@ namespace PersonalBlog.Web.Controllers
 
 		public IActionResult Index()
 		{
-			//SignInRegisterViewModel srVM = new SignInRegisterViewModel();
-			return View("Authentication");
+			return View("SignInRegister");
 		}
 
-		public async Task<ViewResult> Register([Bind("FirstName,LastName,Email,Password")] PersonalBlogUser user)
+		public async Task<ViewResult> Register([Bind("FirstName,LastName,Email,Password")] UserRegister user)
 		{
 			await _auth.CreateUser(user);
 
@@ -47,7 +45,7 @@ namespace PersonalBlog.Web.Controllers
 			return View("../Home/Index", postVM);
 		}
 
-		public async Task<ViewResult> SignIn([Bind("Email,Password")] PersonalBlogLoginUser loginUser)
+		public async Task<ViewResult> Login([Bind("Email,Password")] UserLogin loginUser)
         {
 			bool areCredentialsValid = _auth.AreCredentialsValid(loginUser);
 
@@ -79,12 +77,12 @@ namespace PersonalBlog.Web.Controllers
 				//SignInRegisterViewModel srVM = new SignInRegisterViewModel();
 				//srVM.Successful = false;
 				//srVM.Message = "The email or password you entered was incorrect.";
-				return View("Authentication");
+				return View("SignInRegister");
             }
 			
         }
 
-		public async Task<ViewResult> SignOut(PersonalBlogLoginUser user)
+		public async Task<ViewResult> Logout(UserLogin user)
 		{
 			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
