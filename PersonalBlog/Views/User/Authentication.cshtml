@@ -1,29 +1,30 @@
 ﻿@{
     ViewData["Title"] = "User Page";
-    @model PersonalBlog.Web.ViewModels.SignInRegisterViewModel
+    @model PersonalBlog.ClassLibrary.PersonalBlogUser
+    //@model PersonalBlog.Web.ViewModels.SignInRegisterViewModel
 }
 
 <div class="auth-container">
-    @if(@Model.Successful == false && !string.IsNullOrEmpty(@Model.Message))
+@*    @if(@Model.Successful == false && !string.IsNullOrEmpty(@Model.Message))
     {
      <div class="row w-100">
         <div class="alert alert-danger w-100" role="alert">
           @Model.Message
         </div>
     </div>
-    }
+    }*@
     <div class="row">
         <div class="col-12 col-md-6">
             <h1 class="my-font">Sign In</h1>
             <form asp-controller="User" asp-action="SignIn">
                 <div class="form-group">
                     <label class="control-label">Email<span style="color: red"> *</span></label>
-                    <input id="login-email" name="User.Email" type="text" class="form-control">
+                    <input id="login-email" name="Email" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                     <div class="input-group mb-3">
                       <label class="control-label w-100">Password<span style="color: red"> *</span></label>
-                      <input id="login-password" name="User.Password" type="password" class="pass-input form-control">
+                      <input id="login-password" name="Password" type="password" class="pass-input form-control">
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" id="show-pass-btn">
                             <img class="visible-eye" src="~/images/nounEye.png" alt="eye">
@@ -41,19 +42,19 @@
             <form asp-controller="User" asp-action="Register">
                 <div class="form-group">
                     <label class="control-label">First Name<span style="color: red"> *</span></label>
-                    <input id="reg-firstname" name="User.FirstName" type="text" class="form-control">
+                    <input id="reg-firstname" name="FirstName" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Last Name<span style="color: red"> *</span></label>
-                    <input id="reg-lastname" name="User.LastName" type="text" class="form-control">
+                    <input id="reg-lastname" name="LastName" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Email<span style="color: red"> *</span></label>
-                    <input id="reg-email" name="User.Email" type="text" class="form-control">
+                    <input id="reg-email" name="Email" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Password<span style="color: red"> *</span></label>
-                    <input id="reg-password" name="User.Password" type="password" class="form-control">
+                    <input id="reg-password" name="Password" type="password" class="form-control">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Confirm Password<span style="color: red"> *</span></label>
@@ -69,6 +70,9 @@
                 <button id="reg-btn" type="submit" class="btn disabled-btn" disabled>Register</button>
             </form>
         </div>
+    </div>
+    <div class="row">
+        <a asp-controller="User" asp-action="SignOut" class="btn btn-danger" type="button">Sign Out</a>
     </div>
 </div>
 

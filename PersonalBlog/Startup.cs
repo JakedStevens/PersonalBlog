@@ -4,16 +4,28 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using System;
+using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using System.Security.Claims;
+using System.Linq;
+using Microsoft.Extensions.Logging;
+using PersonalBlog.Web.Controllers;
+using PersonalBlog.Web.Models;
 
 namespace PersonalBlog.Web
 {
 	public class Startup
 	{
+		private readonly IWebHostEnvironment _env;
 		static readonly PersonalBlogDbContext _dbContext = new();
 
-		public Startup(IConfiguration configuration)
+		public Startup(IConfiguration configuration, IWebHostEnvironment env)
 		{
 			Configuration = configuration;
+			_env = env;
 		}
 
 		public IConfiguration Configuration { get; }
@@ -21,7 +33,24 @@ namespace PersonalBlog.Web
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllersWithViews();
+			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+			.AddCookie(options =>
+				{
+					options.Cookie.HttpOnly = true;
+					options.Cookie.SecurePolicy = _env.IsDevelopment() ? CookieSecurePolicy.None : CookieSecurePolicy.Always;
+					options.Cookie.SameSite = SameSiteMode.Lax;
+					options.Cookie.Name = "Blog.AuthCookie";
+					options.LoginPath = "/User/SignIn";
+					options.LogoutPath = "/User/SignOut";
+				});
+			services.Configure<CookiePolicyOptions>(options =>
+			{
+				options.MinimumSameSitePolicy = SameSiteMode.Strict;
+				options.HttpOnly = HttpOnlyPolicy.None;
+				options.Secure = _env.IsDevelopment()
+				  ? CookieSecurePolicy.None : CookieSecurePolicy.Always;
+			});
+			services.AddControllersWithViews(options => options.Filters.Add(new AuthorizeFilter()));
 			services.AddTransient<PersonalBlogDbContext>();
 			services.AddScoped<UserAuth>();
 		}
@@ -43,6 +72,8 @@ namespace PersonalBlog.Web
 			app.UseStaticFiles();
 			app.UseRouting();
 			app.UseAuthorization();
+			app.UseCookiePolicy();
+			app.UseAuthentication();
 
 			app.UseEndpoints(endpoints =>
 			{

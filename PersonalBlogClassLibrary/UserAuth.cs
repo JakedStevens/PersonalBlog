@@ -24,11 +24,23 @@ namespace PersonalBlog.ClassLibrary
 
         public bool AreCredentialsValid(PersonalBlogLoginUser user)
         {
-            PersonalBlogUser retrievedUser = _dbContext.PersonalBlogUser.SingleOrDefault(record => record.Email == user.Email);
+            if (user == null)
+            {
+                return false;
+            }
+            else
+            {
+                PersonalBlogUser retrievedUser = _dbContext.PersonalBlogUser.SingleOrDefault(record => record.Email == user.Email);
 
-            string savedHashedPassword = retrievedUser.Password;
+                string savedHashedPassword = retrievedUser.Password;
 
-            return Crypto.VerifyHashedPassword(savedHashedPassword, user.Password);
+                return Crypto.VerifyHashedPassword(savedHashedPassword, user.Password);
+            }
+        }
+
+        public PersonalBlogUser GetUserInfo(PersonalBlogLoginUser user)
+        {
+            return _dbContext.PersonalBlogUser.SingleOrDefault(record => record.Email == user.Email);
         }
     }
 }

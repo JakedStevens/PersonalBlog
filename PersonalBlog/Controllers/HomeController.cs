@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace PersonalBlog.Web.Controllers
 {
+	[AllowAnonymous]
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
@@ -24,7 +25,6 @@ namespace PersonalBlog.Web.Controllers
 
 		public async Task<ViewResult> Index()
 		{
-
 			List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
 			BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
 			return View(postVM);
