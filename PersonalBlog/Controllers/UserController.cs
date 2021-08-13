@@ -33,7 +33,7 @@ namespace PersonalBlog.Web.Controllers
 
 		public IActionResult Index()
 		{
-			return View("SignInRegister");
+			return View("LoginRegister");
 		}
 
 		public async Task<ViewResult> Register([Bind("FirstName,LastName,Email,Password")] UserRegister user)
@@ -77,7 +77,7 @@ namespace PersonalBlog.Web.Controllers
 				//SignInRegisterViewModel srVM = new SignInRegisterViewModel();
 				//srVM.Successful = false;
 				//srVM.Message = "The email or password you entered was incorrect.";
-				return View("SignInRegister");
+				return View("LoginRegister");
             }
 			
         }
