@@ -25,7 +25,8 @@ namespace PersonalBlog.Web.Controllers
 
 		public IActionResult Index()
 		{
-			return View("Authentication");
+			SignInRegisterViewModel srVM = new SignInRegisterViewModel();
+			return View("Authentication", srVM);
 		}
 
 		public async Task<ViewResult> SignIn([Bind("Email,Password")] PersonalBlogLoginUser user)
@@ -33,9 +34,20 @@ namespace PersonalBlog.Web.Controllers
 			
 			bool areCredentialsValid = _auth.AreCredentialsValid(user);
 
-			List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
-            BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
-            return View("../Home/Index", postVM);
+			if (areCredentialsValid)
+            {
+				List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
+				BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
+				return View("../Home/Index", postVM);
+			}
+			else
+            {
+				SignInRegisterViewModel srVM = new SignInRegisterViewModel();
+				srVM.Successful = false;
+				srVM.Message = "The email or password you entered was incorrect.";
+				return View("Authentication", srVM);
+			}
+			
         }
 
         public async Task<ViewResult> Register([Bind("FirstName,LastName,Email,Password")] PersonalBlogUser user)
