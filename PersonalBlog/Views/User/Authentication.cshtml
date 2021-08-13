@@ -7,7 +7,7 @@
     @if(@Model.Successful == false && !string.IsNullOrEmpty(@Model.Message))
     {
      <div class="row w-100">
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger w-100" role="alert">
           @Model.Message
         </div>
     </div>
