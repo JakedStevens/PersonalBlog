@@ -31,12 +31,13 @@ namespace PersonalBlog.Web.Controllers
 			_auth = auth;
 		}
 
-		public IActionResult LoginRegister()
+		public ViewResult LoginRegister()
 		{
 			var lrVM = new LoginRegisterViewModel();
 			return View("LoginRegister", lrVM);
 		}
 
+		[HttpPost]
 		public async Task<ViewResult> Register([Bind("FirstName,LastName,Email,Password,ConfirmPassword")] UserRegister user)
 		{
 			var doesAccExist = _auth.DoesAccountExist(user);
@@ -55,11 +56,27 @@ namespace PersonalBlog.Web.Controllers
 				var lrVM = new LoginRegisterViewModel() { Alert = failAlert };
 				return View("LoginRegister", lrVM);
 			}
-			
 		}
 
+		public IActionResult Login()
+		{
+			if (Request.QueryString.HasValue)
+			{
+				Alert infoAlert = new Alert() { ShowAlert = true, AlertType = AlertEnum.info, Message = "Please sign in to continue." };
+				var lrVM = new LoginRegisterViewModel() { Alert = infoAlert };
+				return View("LoginRegister", lrVM);
+			}
+			else
+			{
+				var lrVM = new LoginRegisterViewModel();
+				return View("LoginRegister", lrVM);
+			}
+		}
+
+		[HttpPost]
 		public async Task<IActionResult> Login([Bind("LoginEmail,LoginPassword")] UserLogin loginUser)
         {
+			var request = Request;
 			bool areCredentialsValid = _auth.AreCredentialsValid(loginUser);
 
 			if (areCredentialsValid)
@@ -79,7 +96,6 @@ namespace PersonalBlog.Web.Controllers
 				await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
 				return RedirectToAction("Home", "Home");
-
 			}
 			else
             {
@@ -90,7 +106,7 @@ namespace PersonalBlog.Web.Controllers
 			
         }
 
-		public async Task<IActionResult> Logout(UserLogin user)
+		public async Task<IActionResult> Logout()
 		{
 			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -99,12 +115,20 @@ namespace PersonalBlog.Web.Controllers
 
 		public ViewResult Profile()
 		{
-			var cookies = Response.Cookies;
+			if (this.User.Claims.ToList().Count > 0)
+			{
+				var email = this.User.Claims.ToList().FirstOrDefault(claim => claim.Type == "email").Value;
+				PersonalBlogUser user = _auth.GetUserInfo(email);
 
-			var email = this.User.Claims.ToList().FirstOrDefault(claim => claim.Type == "email").Value;
-			PersonalBlogUser user = _auth.GetUserInfo(email);
-
-			return View("Profile", user);
+				return View("Profile", user);
+			}
+			else
+			{
+				Alert failAlert = new Alert() { ShowAlert = true, AlertType = AlertEnum.danger, Message = "No user logged in. Log in to view your profile." };
+				var lrVM = new LoginRegisterViewModel() { Alert = failAlert };
+				return View("LoginRegister", lrVM);
+			}
+			
 		}
 
 		private ViewResult Revoke()
@@ -122,23 +146,16 @@ namespace PersonalBlog.Web.Controllers
 			const string issuer = "localhost";
 			const string audience = "localhost";
 
-			var identity = new ClaimsIdentity(new List<Claim>
-			{
-			new Claim("sub", userId)
-			});
+			var identity = new ClaimsIdentity(new List<Claim> { new Claim("sub", userId) });
 
 			var bytes = Encoding.UTF8.GetBytes(userId);
 			var key = new SymmetricSecurityKey(bytes);
-			var signingCredentials = new SigningCredentials(
-			  key, SecurityAlgorithms.HmacSha256);
+			var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
 			var now = DateTime.UtcNow;
 			var handler = new JwtSecurityTokenHandler();
 
-			var token = handler.CreateJwtSecurityToken(
-			  issuer, audience, identity,
-			  now, now.Add(TimeSpan.FromHours(1)),
-			  now, signingCredentials);
+			var token = handler.CreateJwtSecurityToken(issuer, audience, identity, now, now.Add(TimeSpan.FromHours(1)), now, signingCredentials);
 
 			return handler.WriteToken(token);
 		}

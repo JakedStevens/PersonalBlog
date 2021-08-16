@@ -70,10 +70,18 @@
                     <img src="~/images/nounUser.png" class="user-icon" alt="user icon">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="user-dropdown">
+                
                     @if (@User.Identity.IsAuthenticated)
                         {
-                            <a class="dropdown-item" asp-controller="User" asp-action="Profile">Profile</a>
+                            foreach (var claim in @User.Claims)
+                            {
+                                if(@claim.Type == "first_name")
+                                {
+                                    <div class="user-dropdown-name">Hey @claim.Value!</div>
+                                }
+                            }
                             <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-controller="User" asp-action="Profile">Profile</a>
                             <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
                         }
                     else

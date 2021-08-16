@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PersonalBlog.ClassLibrary;
@@ -18,6 +19,7 @@ namespace PersonalBlog.Web.Controllers
         }
 
         // GET: BlogPosts
+        [AllowAnonymous]
         public async Task<ViewResult> AllPosts()
         {
             List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
@@ -25,6 +27,7 @@ namespace PersonalBlog.Web.Controllers
             return View("AllPosts", postVM);
         }
 
+        [AllowAnonymous]
         public async Task<ViewResult> Drums()
         {
             List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
@@ -33,6 +36,7 @@ namespace PersonalBlog.Web.Controllers
             return View("DrumPosts", postVM);
         }
 
+        [AllowAnonymous]
         public async Task<ViewResult> Guitar()
         {
             List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
@@ -41,6 +45,7 @@ namespace PersonalBlog.Web.Controllers
             return View("GuitarPosts", postVM);
         }
 
+        [AllowAnonymous]
         public async Task<ViewResult> Engineering()
         {
             List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
@@ -49,6 +54,7 @@ namespace PersonalBlog.Web.Controllers
             return View("EngineeringPosts", postVM);
         }
 
+        [AllowAnonymous]
         public async Task<ViewResult> Search(string searchInput)
         {
             if(!string.IsNullOrWhiteSpace(searchInput))
@@ -66,20 +72,15 @@ namespace PersonalBlog.Web.Controllers
             
         }
 
+        [AllowAnonymous]
         // GET: BlogPosts/Details/{id}
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) { return NotFound(); }
 
-            var blogPost = await _dbContext.BlogPost
-                .FirstOrDefaultAsync(m => m.PostId == id);
-            if (blogPost == null)
-            {
-                return NotFound();
-            }
+            var blogPost = await _dbContext.BlogPost.FirstOrDefaultAsync(m => m.PostId == id);
+
+            if (blogPost == null) { return NotFound(); }
 
             return View(blogPost);
         }
