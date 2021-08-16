@@ -18,13 +18,13 @@ namespace PersonalBlog.ClassLibrary
         [Required(ErrorMessage = "Email is Required")]
         public string Email { get; set; }
 
-        [StringLength(26)]
+        [StringLength(26, ErrorMessage = "Password must be between 7 & 26 characters", MinimumLength = 7)]
         [Required(ErrorMessage = "Password is Required")]
         public string Password { get; set; }
 
         [StringLength(26)]
         [Required(ErrorMessage = "Confirm is Required")]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage = "Passwords Must Match")]
         public string ConfirmPassword { get; set; }
     }
 }

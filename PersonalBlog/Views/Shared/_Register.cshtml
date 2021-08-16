@@ -4,29 +4,29 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="FirstName" class="control-label">First Name<span style="color: red"> *</span></label>
-        <input asp-for="FirstName" type="text" class="form-control">
+        <input asp-for="FirstName" type="text" id="reg-first-name" class="form-control">
         <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="LastName" class="control-label">Last Name<span style="color: red"> *</span></label>
-        <input asp-for="LastName" type="text" class="form-control">
+        <input asp-for="LastName" type="text" id="reg-last-name" class="form-control">
         <span asp-validation-for="LastName" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Email" class="control-label">Email<span style="color: red"> *</span></label>
-        <input asp-for="Email" type="text" class="form-control">
+        <input asp-for="Email" type="text" id="reg-email" class="form-control">
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Password" class="control-label">Password<span style="color: red"> *</span></label>
-        <input asp-for="Password" type="password" class="form-control">
+        <input asp-for="Password" type="password" id="reg-pass" class="form-control">
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="ConfirmPassword" class="control-label">Confirm Password<span style="color: red"> *</span></label>
-        <input asp-for="ConfirmPassword" type="password" class="form-control">
+        <input asp-for="ConfirmPassword" type="password" id="reg-conf-pass" class="form-control">
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-outline-success">Register</button>
+    <button type="submit" id="reg-btn" class="btn disabled-btn" disabled>Register</button>
 </form>
-<script src="~/js/inputValidation.js"></script>
+<script src="~/js/registerValidation.js"></script>

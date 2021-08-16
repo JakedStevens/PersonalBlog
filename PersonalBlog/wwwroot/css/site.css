@@ -125,6 +125,10 @@ main {
     text-decoration: none;
 }
 
+.dropdown-toggle {
+    cursor: pointer;
+}
+
 .dropdown-menu {
     position: absolute;
     top: 100%;
