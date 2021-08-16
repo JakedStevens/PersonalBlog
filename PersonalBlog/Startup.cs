@@ -79,11 +79,15 @@ namespace PersonalBlog.Web
 			{
 				endpoints.MapControllerRoute(
 					name: "Home",
-					pattern: "{controller=Home}/{action=Index}");
+					pattern: "{controller=Home}/{action=Home}");
 				endpoints.MapControllerRoute(
-					name: "Drums",
-					pattern: "{controller=Drums}/{action=Index}",
-					defaults: new { controller = "Drums", action = "Index" });
+					name: "Blog Posts",
+					pattern: "{controller=BlogPosts}/{action=AllPosts}",
+					defaults: new { controller = "BlogPosts", action = "AllPosts" });
+				endpoints.MapControllerRoute(
+					name: "User Login/Register",
+					pattern: "{controller=User}/{action=LoginRegister}",
+					defaults: new { controller = "User", action = "LoginRegister" });
 			});
 		}
 	}

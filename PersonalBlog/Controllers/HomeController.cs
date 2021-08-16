@@ -23,7 +23,7 @@ namespace PersonalBlog.Web.Controllers
 			_dbContext = dbContext;
 		}
 
-		public async Task<ViewResult> Index()
+		public async Task<ViewResult> Home()
 		{
 			List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
 			BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };

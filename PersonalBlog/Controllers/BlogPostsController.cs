@@ -18,7 +18,7 @@ namespace PersonalBlog.Web.Controllers
         }
 
         // GET: BlogPosts
-        public async Task<ViewResult> Index()
+        public async Task<ViewResult> AllPosts()
         {
             List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
             BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
@@ -99,7 +99,7 @@ namespace PersonalBlog.Web.Controllers
             {
                 _dbContext.Add(blogPost);
                 await _dbContext.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AllPosts));
             }
             return View(blogPost);
         }
@@ -143,7 +143,7 @@ namespace PersonalBlog.Web.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AllPosts));
             }
             return View("Index");
         }
@@ -174,7 +174,7 @@ namespace PersonalBlog.Web.Controllers
             var blogPost = await _dbContext.BlogPost.FindAsync(id);
             _dbContext.BlogPost.Remove(blogPost);
             await _dbContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AllPosts));
         }
 
         private bool BlogPostExists(int id)

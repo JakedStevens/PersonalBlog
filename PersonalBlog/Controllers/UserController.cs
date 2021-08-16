@@ -31,7 +31,7 @@ namespace PersonalBlog.Web.Controllers
 			_auth = auth;
 		}
 
-		public IActionResult Index()
+		public IActionResult LoginRegister()
 		{
 			var lrVM = new LoginRegisterViewModel();
 			return View("LoginRegister", lrVM);
@@ -49,7 +49,6 @@ namespace PersonalBlog.Web.Controllers
 		public async Task<ViewResult> Login([Bind("LoginEmail,LoginPassword")] UserLogin loginUser)
         {
 			bool areCredentialsValid = _auth.AreCredentialsValid(loginUser);
-
 
 			if (areCredentialsValid)
 			{
@@ -75,7 +74,7 @@ namespace PersonalBlog.Web.Controllers
 			}
 			else
             {
-				Alert failAlert = new Alert() { ShowAlert = true, AlertType = AlertEnum.danger, Message = "The email or password you entered was incorrect/" };
+				Alert failAlert = new Alert() { ShowAlert = true, AlertType = AlertEnum.danger, Message = "The email or password you entered was incorrect." };
 				var lrVM = new LoginRegisterViewModel() { Alert = failAlert };
 				return View("LoginRegister", lrVM);
 			}
