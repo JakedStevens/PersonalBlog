@@ -58,7 +58,7 @@ namespace PersonalBlog.Web.Controllers
 			
 		}
 
-		public async Task<ViewResult> Login([Bind("LoginEmail,LoginPassword")] UserLogin loginUser)
+		public async Task<IActionResult> Login([Bind("LoginEmail,LoginPassword")] UserLogin loginUser)
         {
 			bool areCredentialsValid = _auth.AreCredentialsValid(loginUser);
 
@@ -78,9 +78,8 @@ namespace PersonalBlog.Web.Controllers
 				var authProperties = new AuthenticationProperties();
 				await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
-				List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
-				BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
-				return View("../Home/Home", postVM);
+				return RedirectToAction("Home", "Home");
+
 			}
 			else
             {
@@ -91,22 +90,18 @@ namespace PersonalBlog.Web.Controllers
 			
         }
 
-		public async Task<ViewResult> Logout(UserLogin user)
+		public async Task<IActionResult> Logout(UserLogin user)
 		{
 			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-			var cookies = Response.Cookies;
-
-			List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
-			BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
-			return View("../Home/Home", postVM);
+			return RedirectToAction("Home", "Home");
 		}
 
 		public ViewResult Profile()
 		{
 			var cookies = Response.Cookies;
 
-			var email = User.Claims.ToList().FirstOrDefault(claim => claim.Type == "email").Value;
+			var email = this.User.Claims.ToList().FirstOrDefault(claim => claim.Type == "email").Value;
 			PersonalBlogUser user = _auth.GetUserInfo(email);
 
 			return View("Profile", user);
