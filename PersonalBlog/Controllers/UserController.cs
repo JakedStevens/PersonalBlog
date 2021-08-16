@@ -39,11 +39,23 @@ namespace PersonalBlog.Web.Controllers
 
 		public async Task<ViewResult> Register([Bind("FirstName,LastName,Email,Password,ConfirmPassword")] UserRegister user)
 		{
-			await _auth.CreateUser(user);
+			var doesAccExist = _auth.DoesAccountExist(user);
 
-			List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
-			BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
-			return View("../Home/Index", postVM);
+			if (!doesAccExist)
+			{
+				await _auth.CreateUser(user);
+
+				List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
+				BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
+				return View("../Home/Index", postVM);
+			}
+			else
+			{
+				Alert failAlert = new Alert() { ShowAlert = true, AlertType = AlertEnum.danger, Message = "There is already an account for the email entered." };
+				var lrVM = new LoginRegisterViewModel() { Alert = failAlert };
+				return View("LoginRegister", lrVM);
+			}
+			
 		}
 
 		public async Task<ViewResult> Login([Bind("LoginEmail,LoginPassword")] UserLogin loginUser)
@@ -52,7 +64,7 @@ namespace PersonalBlog.Web.Controllers
 
 			if (areCredentialsValid)
 			{
-				PersonalBlogUser user = _auth.GetUserInfo(loginUser);
+				PersonalBlogUser user = _auth.GetUserInfo(loginUser.LoginEmail);
 				var userId = Guid.NewGuid().ToString();
 				var claims = new List<Claim> {
 					new Claim("user_id", userId),
@@ -65,8 +77,6 @@ namespace PersonalBlog.Web.Controllers
 				var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 				var authProperties = new AuthenticationProperties();
 				await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-
-				var thing = this.User;
 
 				List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
 				BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
@@ -88,6 +98,14 @@ namespace PersonalBlog.Web.Controllers
 			List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
 			BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
 			return View("../Home/Index", postVM);
+		}
+
+		public ViewResult Profile()
+		{
+			var email = User.Claims.ToList().FirstOrDefault(claim => claim.Type == "email").Value;
+			PersonalBlogUser user = _auth.GetUserInfo(email);
+
+			return View("Profile", user);
 		}
 
 		private ViewResult Revoke()

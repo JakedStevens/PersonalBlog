@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "User Profile";
+    @model PersonalBlog.ClassLibrary.PersonalBlogUser
+}
+
+@*<div class=""></div>*@
+
+<div class="profile-container">
+    <div class="row cc">
+        <h1 class="my-font">Profile Information</h1>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <label class="control-label w-100"><strong>Name</strong></label>
+            <p>@Model.FirstName @Model.LastName</p>
+        </div>
+        <div class="col">
+            <label class="control-label w-100"><strong>Email</strong></label>
+            <p>@Model.Email</p>
+        </div>
+        <div class="col">
+            <label class="control-label w-100"><strong>Account Created On</strong></label>
+            <p>@Model.CreatedOn</p>
+        </div>
+    </div>
+</div>

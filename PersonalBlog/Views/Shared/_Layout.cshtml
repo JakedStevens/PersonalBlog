@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Jake's Blog</title>
+    <title>@ViewData["Title"] - A Music Blog</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet"> 
@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="~/css/Delete.css" />
     <link rel="stylesheet" href="~/css/PostSearch.css" />
     <link rel="stylesheet" href="~/css/LoginRegister.css" />
+    <link rel="stylesheet" href="~/css/Profile.css" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -69,10 +70,16 @@
                     <img src="~/images/nounUser.png" class="user-icon" alt="user icon">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="user-dropdown">
-                    <a class="dropdown-item" asp-controller="User" asp-action="Index">Login/Register</a>
-                    <a class="dropdown-item" asp-controller="User" asp-action="Profile">Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
+                    @if (@User.Identity.IsAuthenticated)
+                        {
+                            <a class="dropdown-item" asp-controller="User" asp-action="Profile">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
+                        }
+                    else
+                        {
+                            <a class="dropdown-item" asp-controller="User" asp-action="LoginRegister">Login/Register</a>  
+                        }
                 </div>
               </div>
             </div>

@@ -33,15 +33,18 @@ namespace PersonalBlog.ClassLibrary
             else
 			{
                 string savedHashedPassword = retrievedUser.Password;
-
                 return Crypto.VerifyHashedPassword(savedHashedPassword, user.LoginPassword);
             }
-            
         }
 
-        public PersonalBlogUser GetUserInfo(UserLogin user)
+        public PersonalBlogUser GetUserInfo(string email)
         {
-            return _dbContext.PersonalBlogUser.SingleOrDefault(record => record.Email == user.LoginEmail);
+            return _dbContext.PersonalBlogUser.SingleOrDefault(record => record.Email == email);
+        }
+
+        public bool DoesAccountExist(UserRegister user)
+        {
+            return _dbContext.PersonalBlogUser.Any(record => record.Email == user.Email);
         }
     }
 }
