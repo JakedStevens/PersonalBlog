@@ -33,10 +33,11 @@ namespace PersonalBlog.Web.Controllers
 
 		public IActionResult Index()
 		{
-			return View("LoginRegister");
+			var lrVM = new LoginRegisterViewModel();
+			return View("LoginRegister", lrVM);
 		}
 
-		public async Task<ViewResult> Register([Bind("FirstName,LastName,Email,Password")] UserRegister user)
+		public async Task<ViewResult> Register([Bind("FirstName,LastName,Email,Password,ConfirmPassword")] UserRegister user)
 		{
 			await _auth.CreateUser(user);
 
@@ -45,7 +46,7 @@ namespace PersonalBlog.Web.Controllers
 			return View("../Home/Index", postVM);
 		}
 
-		public async Task<ViewResult> Login([Bind("Email,Password")] UserLogin loginUser)
+		public async Task<ViewResult> Login([Bind("LoginEmail,LoginPassword")] UserLogin loginUser)
         {
 			bool areCredentialsValid = _auth.AreCredentialsValid(loginUser);
 
@@ -74,11 +75,10 @@ namespace PersonalBlog.Web.Controllers
 			}
 			else
             {
-				//SignInRegisterViewModel srVM = new SignInRegisterViewModel();
-				//srVM.Successful = false;
-				//srVM.Message = "The email or password you entered was incorrect.";
-				return View("LoginRegister");
-            }
+				Alert failAlert = new Alert() { ShowAlert = true, AlertType = AlertEnum.danger, Message = "The email or password you entered was incorrect/" };
+				var lrVM = new LoginRegisterViewModel() { Alert = failAlert };
+				return View("LoginRegister", lrVM);
+			}
 			
         }
 

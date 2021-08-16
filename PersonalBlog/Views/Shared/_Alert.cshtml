@@ -1,0 +1,10 @@
+﻿@model PersonalBlog.ClassLibrary.Alert
+
+@if (@Model.ShowAlert)
+{
+    <div class="row w-100">
+        <div class="alert alert-@(Model.AlertType) w-100" role="alert">
+          @Model.Message
+        </div>
+    </div>
+}

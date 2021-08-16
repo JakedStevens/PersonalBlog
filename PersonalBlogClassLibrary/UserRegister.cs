@@ -15,20 +15,16 @@ namespace PersonalBlog.ClassLibrary
         [Required(ErrorMessage = "Last Name is Required")]
         public string LastName { get; set; }
 
-        [Column("Email")]
         [Required(ErrorMessage = "Email is Required")]
         public string Email { get; set; }
 
-        [Column("Password")]
         [StringLength(26)]
         [Required(ErrorMessage = "Password is Required")]
         public string Password { get; set; }
 
-        [Column("Password")]
         [StringLength(26)]
         [Required(ErrorMessage = "Confirm is Required")]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
-
     }
 }

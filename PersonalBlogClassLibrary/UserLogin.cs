@@ -7,12 +7,10 @@ namespace PersonalBlog.ClassLibrary
 {
     public class UserLogin
     {
-        [Column("Email")]
         [Required(ErrorMessage = "Email is Required")]
-        public string Email { get; set; }
+        public string LoginEmail { get; set; }
 
-        [Column("Password")]
         [Required(ErrorMessage = "Password is Required")]
-        public string Password { get; set; }
+        public string LoginPassword { get; set; }
     }
 }
