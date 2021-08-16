@@ -47,7 +47,7 @@ namespace PersonalBlog.Web.Controllers
 
 				List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
 				BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
-				return View("../Home/Index", postVM);
+				return View("../Home/Home", postVM);
 			}
 			else
 			{
@@ -80,7 +80,7 @@ namespace PersonalBlog.Web.Controllers
 
 				List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
 				BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
-				return View("../Home/Index", postVM);
+				return View("../Home/Home", postVM);
 			}
 			else
             {
@@ -95,13 +95,17 @@ namespace PersonalBlog.Web.Controllers
 		{
 			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
+			var cookies = Response.Cookies;
+
 			List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
 			BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
-			return View("../Home/Index", postVM);
+			return View("../Home/Home", postVM);
 		}
 
 		public ViewResult Profile()
 		{
+			var cookies = Response.Cookies;
+
 			var email = User.Claims.ToList().FirstOrDefault(claim => claim.Type == "email").Value;
 			PersonalBlogUser user = _auth.GetUserInfo(email);
 
