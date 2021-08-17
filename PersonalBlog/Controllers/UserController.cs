@@ -95,7 +95,7 @@ namespace PersonalBlog.Web.Controllers
 				var authProperties = new AuthenticationProperties();
 				await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
-				return Redirect($"{loginUser.ReturnUrl}");
+				return !string.IsNullOrEmpty(loginUser.ReturnUrl) ? Redirect($"{loginUser.ReturnUrl}") : RedirectToAction("Home", "Home");
 			}
 			else
             {
