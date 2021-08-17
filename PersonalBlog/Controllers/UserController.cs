@@ -113,7 +113,6 @@ namespace PersonalBlog.Web.Controllers
 					return View("LoginRegister", lrVM);
 				}
 			}
-			
         }
 
 		public async Task<IActionResult> Logout()

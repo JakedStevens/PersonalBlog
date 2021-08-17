@@ -12,8 +12,8 @@
             <strong>Post Date:</strong><div>@Model.PostDate.ToShortDateString()</div>
         </div>
         <div class="col-4">
-            <a class="text-dark" asp-action="Edit" asp-route-id="@Model.PostId">Edit</a> |
-            <a class="text-dark" asp-action="AllPosts">Back To List</a>
+            <a asp-action="Edit" asp-route-id="@Model.PostId" class="btn btn-dark btn-125">Edit</a>
+            <a asp-action="AllPosts" class="btn btn-outline-dark btn-125">Back To List</a>
         </div>
     </div>
     
