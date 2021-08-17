@@ -39,7 +39,6 @@
 
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-
                   <li class="nav-item active">
                     <a class="nav-link text-dark" asp-controller="BlogPosts" asp-action="AllPosts">All Posts</a>
                   </li>
@@ -56,39 +55,45 @@
                     <a class="nav-link text-dark" asp-controller="BlogPosts" asp-action="Engineering">Engineering</a>
                   </li>
 
-                </ul>
-                @using (Html.BeginForm("Search", "BlogPosts", FormMethod.Post))
-                    {
+                  <li class="nav-item active ml-5">
+                    <form asp-controller="BlogPosts" asp-action="Search" style="width: 400px;">
                         <div class="input-group">
                           <input name="searchInput" type="search" class="form-control" placeholder="Search">
                           <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="submit">Search</button>
                           </div>
                         </div>
-                    }
-                <a class="nav-link dropdown-toggle" id="user-dropdown" role="button" data-toggle="dropdown">
-                    <img src="~/images/nounUser.png" class="user-icon" alt="user icon">
-                </a>
-                <div class="dropdown-menu" aria-labelledby="user-dropdown">
-                
+                    </form>
+                  </li>
+                </ul>
+
+                <ul class="navbar-nav ml-auto">
                     @if (@User.Identity.IsAuthenticated)
+                    {
+                        foreach (var claim in @User.Claims)
                         {
-                            foreach (var claim in @User.Claims)
+                            if(@claim.Type == "first_name")
                             {
-                                if(@claim.Type == "first_name")
-                                {
-                                    <div class="user-dropdown-name">Hey @claim.Value!</div>
-                                }
+                                <li class="nav-item active">
+                                    <div class="nav-link text-dark" style="cursor: default"><strong>@claim.Value</strong></div>
+                                </li>
                             }
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" asp-controller="User" asp-action="Profile">Profile</a>
-                            <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
                         }
+                      <li class="nav-item active">
+                        <a class="nav-link text-dark" asp-controller="User" asp-action="Profile">Profile</a>
+                      </li>
+                      <li class="nav-item active">
+                        <a class="nav-link text-dark" asp-controller="User" asp-action="Logout">Logout</a>
+                      </li>
+                    }
                     else
-                        {
-                            <a class="dropdown-item" asp-controller="User" asp-action="LoginRegister">Login/Register</a>  
-                        }
-                </div>
+                    {
+                      <li class="nav-item active">
+                        <a class="nav-link text-dark" asp-controller="User" asp-action="LoginRegister">Login/Register</a> 
+                      </li>
+                    }
+                </ul>
+
               </div>
             </div>
         </nav>
