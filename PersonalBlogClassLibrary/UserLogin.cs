@@ -12,5 +12,7 @@ namespace PersonalBlog.ClassLibrary
 
         [Required(ErrorMessage = "Password is Required")]
         public string LoginPassword { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }

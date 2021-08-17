@@ -4,11 +4,9 @@
 }
 
 <div class="list-container">
-    <h1>All Posts</h1>
+    <h1 class="page-title">All Posts</h1>
+    <a class="btn btn-success create-btn" asp-action="Create">Create New</a>
 
-    <p>
-        <a class="btn btn-success" asp-action="Create">Create New</a>
-    </p>
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
@@ -28,7 +26,7 @@
     @foreach (var post in @Model.Posts) {
             <tr>
                 <td>
-                    @post.PostTitle
+                    <a class="text-dark" asp-action="Details" asp-route-id="@post.PostId">@post.PostTitle</a>
                 </td>
                 <td>
                     @post.PostCategory
@@ -37,9 +35,8 @@
                     @post.PostDate.ToShortDateString()
                 </td>
                 <td>
-                    <a class="text-dark" asp-action="Edit" asp-route-id="@post.PostId">Edit</a> |
-                    <a class="text-dark" asp-action="Details" asp-route-id="@post.PostId">Details</a> |
-                    <a class="text-dark" asp-action="Delete" asp-route-id="@post.PostId">Delete</a>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@post.PostId">Edit</a>
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@post.PostId">Delete</a>
                 </td>
             </tr>
     }

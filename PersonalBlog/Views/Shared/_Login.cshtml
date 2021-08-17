@@ -1,6 +1,7 @@
 ﻿@model PersonalBlog.ClassLibrary.UserLogin
 
 <form asp-controller="User" asp-action="Login">
+    <input asp-for="ReturnUrl" hidden>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="LoginEmail" class="control-label">Email<span style="color: red"> *</span></label>

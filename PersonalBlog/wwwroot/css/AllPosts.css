@@ -1,0 +1,12 @@
+﻿.list-container {
+	max-width: 1400px;
+	margin: 100px auto 30px;
+}
+
+.page-title {
+	display: inline-block;
+}
+
+.create-btn {
+	margin: 0px 0px 15px 15px;
+}

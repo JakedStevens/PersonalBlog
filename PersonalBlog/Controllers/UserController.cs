@@ -58,12 +58,13 @@ namespace PersonalBlog.Web.Controllers
 			}
 		}
 
-		public IActionResult Login()
+		public IActionResult Login(string returnUrl)
 		{
 			if (Request.QueryString.HasValue)
 			{
 				Alert infoAlert = new Alert() { ShowAlert = true, AlertType = AlertEnum.info, Message = "Please sign in to continue." };
-				var lrVM = new LoginRegisterViewModel() { Alert = infoAlert };
+				UserLogin userLogin = new UserLogin() { ReturnUrl = returnUrl };
+				var lrVM = new LoginRegisterViewModel() { Alert = infoAlert, UserLogin = userLogin };
 				return View("LoginRegister", lrVM);
 			}
 			else
@@ -74,9 +75,8 @@ namespace PersonalBlog.Web.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Login([Bind("LoginEmail,LoginPassword")] UserLogin loginUser)
+		public async Task<IActionResult> Login([Bind("LoginEmail,LoginPassword,ReturnUrl")] UserLogin loginUser)
         {
-			var request = Request;
 			bool areCredentialsValid = _auth.AreCredentialsValid(loginUser);
 
 			if (areCredentialsValid)
@@ -95,13 +95,23 @@ namespace PersonalBlog.Web.Controllers
 				var authProperties = new AuthenticationProperties();
 				await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
-				return RedirectToAction("Home", "Home");
+				return Redirect($"{loginUser.ReturnUrl}");
 			}
 			else
             {
-				Alert failAlert = new Alert() { ShowAlert = true, AlertType = AlertEnum.danger, Message = "The email or password you entered was incorrect." };
-				var lrVM = new LoginRegisterViewModel() { Alert = failAlert };
-				return View("LoginRegister", lrVM);
+				if (!string.IsNullOrEmpty(loginUser.ReturnUrl))
+				{
+					Alert failAlert = new Alert() { ShowAlert = true, AlertType = AlertEnum.danger, Message = "The email or password you entered was incorrect." };
+					UserLogin userLogin = new UserLogin() { ReturnUrl = loginUser.ReturnUrl };
+					var lrVM = new LoginRegisterViewModel() { Alert = failAlert, UserLogin = userLogin };
+					return View("LoginRegister", lrVM);
+				}
+				else
+                {
+					Alert failAlert = new Alert() { ShowAlert = true, AlertType = AlertEnum.danger, Message = "The email or password you entered was incorrect." };
+					var lrVM = new LoginRegisterViewModel() { Alert = failAlert };
+					return View("LoginRegister", lrVM);
+				}
 			}
 			
         }

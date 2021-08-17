@@ -85,8 +85,8 @@ namespace PersonalBlog.Web
 					pattern: "{controller=BlogPosts}/{action=AllPosts}",
 					defaults: new { controller = "BlogPosts", action = "AllPosts" });
 				endpoints.MapControllerRoute(
-					name: "User Login/Register",
-					pattern: "{controller=User}/{action=LoginRegister}",
+					name: "Login",
+					pattern: "{controller=User}/{action=LoginRegister}/{ReturnUrl?}",
 					defaults: new { controller = "User", action = "LoginRegister" });
 			});
 		}
