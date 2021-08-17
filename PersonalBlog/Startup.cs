@@ -20,15 +20,13 @@ namespace PersonalBlog.Web
 	public class Startup
 	{
 		private readonly IWebHostEnvironment _env;
-		static readonly PersonalBlogDbContext _dbContext = new();
+		public IConfiguration Configuration { get; }
 
 		public Startup(IConfiguration configuration, IWebHostEnvironment env)
 		{
 			Configuration = configuration;
 			_env = env;
 		}
-
-		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
@@ -52,7 +50,7 @@ namespace PersonalBlog.Web
 			});
 			services.AddControllersWithViews(options => options.Filters.Add(new AuthorizeFilter()));
 			services.AddTransient<PersonalBlogDbContext>();
-			services.AddScoped<UserAuth>();
+			services.AddTransient<UserAuth>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
