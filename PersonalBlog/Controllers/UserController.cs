@@ -34,16 +34,24 @@ namespace PersonalBlog.Web.Controllers
 		}
 
 		[HttpPost]
-		public async Task<ViewResult> Register([Bind("FirstName,LastName,Email,Password,ConfirmPassword")] UserRegister user)
+		public async Task<IActionResult> Register([Bind("FirstName,LastName,Email,Password,ConfirmPassword")] UserRegister userRegister)
 		{
-			bool doesAccExist = _auth.DoesAccountExist(user);
+			bool doesAccExist = _auth.DoesAccountExist(userRegister);
 
 			if (!doesAccExist)
 			{
-				await _auth.CreateUser(user);
-				BlogPostsViewModel postVM = await _data.CreateAllPostsVM();
+				int createResponse = await _auth.CreateUser(userRegister);
 
-				return View("../Home/Home", postVM);
+				if (createResponse == 1)
+				{
+					var newUser = new UserLogin() { LoginEmail = userRegister.Email, LoginPassword = userRegister.Password, ReturnUrl = "" };
+					return await Login(newUser);
+				}
+				else
+				{
+					LoginRegisterViewModel lrVM = _data.CreateAlertLRVM(AlertTypeEnum.danger, "There was a problem creating an account with this information. Please re-enter and check for correctness.");
+					return View("LoginRegister", lrVM);
+				}
 			}
 			else
 			{
@@ -67,23 +75,23 @@ namespace PersonalBlog.Web.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Login([Bind("LoginEmail,LoginPassword,ReturnUrl")] UserLogin loginUser)
+		public async Task<IActionResult> Login([Bind("LoginEmail,LoginPassword,ReturnUrl")] UserLogin userLogin)
         {
-			if (_auth.AreCredentialsValid(loginUser))
+			if (_auth.AreCredentialsValid(userLogin))
 			{
-				List<Claim> claims = _auth.CreateAuthClaims(loginUser);
+				List<Claim> claims = _auth.CreateAuthClaims(userLogin);
 
 				ClaimsIdentity claimsId = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 				AuthenticationProperties authProps = new AuthenticationProperties();
 				await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsId), authProps);
 
-				return !string.IsNullOrEmpty(loginUser.ReturnUrl) ? Redirect($"{loginUser.ReturnUrl}") : RedirectToAction("Home", "Home");
+				return !string.IsNullOrEmpty(userLogin.ReturnUrl) ? Redirect($"{userLogin.ReturnUrl}") : RedirectToAction("Home", "Home");
 			}
 			else
             {
-				if (!string.IsNullOrEmpty(loginUser.ReturnUrl))
+				if (!string.IsNullOrEmpty(userLogin.ReturnUrl))
 				{
-					LoginRegisterViewModel lrVM = _data.CreateLoginRedirectLRVM(loginUser.ReturnUrl, AlertTypeEnum.danger, "The email or password you entered was incorrect.");
+					LoginRegisterViewModel lrVM = _data.CreateLoginRedirectLRVM(userLogin.ReturnUrl, AlertTypeEnum.danger, "The email or password you entered was incorrect.");
 
 					return View("LoginRegister", lrVM);
 				}

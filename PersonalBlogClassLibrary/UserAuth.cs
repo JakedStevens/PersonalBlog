@@ -19,10 +19,15 @@ namespace PersonalBlog.ClassLibrary
             _dbContext = dbContext;
         }
 
-        public async Task<int> CreateUser(UserRegister user)
+        public async Task<int> CreateUser(UserRegister userRegister)
         {
-            string hashedPassword = Crypto.HashPassword(user.Password);
-            user.Password = hashedPassword;
+            var user = new PersonalBlogUser()
+            {
+                FirstName = userRegister.FirstName,
+                LastName = userRegister.LastName,
+                Email = userRegister.Email,
+                Password = Crypto.HashPassword(userRegister.Password)
+            };
 
             _dbContext.Add(user);
             return await _dbContext.SaveChangesAsync();
