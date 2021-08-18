@@ -6,13 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
-using System;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using System.Security.Claims;
-using System.Linq;
-using Microsoft.Extensions.Logging;
-using PersonalBlog.Web.Controllers;
 using PersonalBlog.Web.Models;
 
 namespace PersonalBlog.Web
@@ -51,6 +46,7 @@ namespace PersonalBlog.Web
 			services.AddControllersWithViews(options => options.Filters.Add(new AuthorizeFilter()));
 			services.AddTransient<PersonalBlogDbContext>();
 			services.AddTransient<UserAuth>();
+			services.AddScoped<DataManager>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

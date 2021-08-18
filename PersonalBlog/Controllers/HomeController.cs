@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using PersonalBlog.ClassLibrary;
 using PersonalBlog.Web.Models;
 using PersonalBlog.Web.ViewModels;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -14,17 +10,17 @@ namespace PersonalBlog.Web.Controllers
 	[AllowAnonymous]
 	public class HomeController : Controller
 	{
-		private readonly PersonalBlogDbContext _dbContext;
+		private readonly DataManager _data;
 
-		public HomeController(PersonalBlogDbContext dbContext)
+		public HomeController(DataManager data)
 		{
-			_dbContext = dbContext;
+			_data = data;
 		}
 
 		public async Task<ViewResult> Home()
 		{
-			List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
-			BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
+			BlogPostsViewModel postVM = await _data.CreateAllPostsVM();
+
 			return View(postVM);
 		}
 

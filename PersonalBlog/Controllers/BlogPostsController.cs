@@ -1,20 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PersonalBlog.ClassLibrary;
+using PersonalBlog.Web.Models;
 using PersonalBlog.Web.ViewModels;
 
 namespace PersonalBlog.Web.Controllers
 {
 	public class BlogPostsController : Controller
     {
+        private readonly DataManager _data;
         private readonly PersonalBlogDbContext _dbContext;
 
-        public BlogPostsController(PersonalBlogDbContext dbContext)
+        public BlogPostsController(DataManager data, PersonalBlogDbContext dbContext)
         {
+            _data = data;
             _dbContext = dbContext;
         }
 
@@ -22,35 +24,32 @@ namespace PersonalBlog.Web.Controllers
         [AllowAnonymous]
         public async Task<ViewResult> AllPosts()
         {
-            List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
-            BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = posts };
+            BlogPostsViewModel postVM = await _data.CreateAllPostsVM();
+
             return View("AllPosts", postVM);
         }
 
         [AllowAnonymous]
         public async Task<ViewResult> Drums()
         {
-            List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
-            List<BlogPost> drumPosts = posts.Where(post => post.PostCategory == "Drums").ToList();
-            BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = drumPosts };
+            BlogPostsViewModel postVM = await _data.CreateFilteredPostsVM(PostTypeEnum.Drums);
+
             return View("DrumPosts", postVM);
         }
 
         [AllowAnonymous]
         public async Task<ViewResult> Guitar()
         {
-            List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
-            List<BlogPost> guitarPosts = posts.Where(post => post.PostCategory == "Guitar").ToList();
-            BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = guitarPosts };
+            BlogPostsViewModel postVM = await _data.CreateFilteredPostsVM(PostTypeEnum.Guitar);
+
             return View("GuitarPosts", postVM);
         }
 
         [AllowAnonymous]
         public async Task<ViewResult> Engineering()
         {
-            List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
-            List<BlogPost> engineeringPosts = posts.Where(post => post.PostCategory == "Engineering").ToList();
-            BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = engineeringPosts };
+            BlogPostsViewModel postVM = await _data.CreateFilteredPostsVM(PostTypeEnum.Engineering);
+
             return View("EngineeringPosts", postVM);
         }
 
@@ -59,9 +58,8 @@ namespace PersonalBlog.Web.Controllers
         {
             if(!string.IsNullOrWhiteSpace(searchInput))
             {
-                List<BlogPost> posts = await _dbContext.BlogPost.ToListAsync();
-                List<BlogPost> filteredPosts = posts.Where(post => post.PostTitle.ToLower().Contains(searchInput.ToLower())).ToList();
-                BlogPostsViewModel postVM = new BlogPostsViewModel() { Posts = filteredPosts };
+                BlogPostsViewModel postVM = await _data.CreateSearchedPostsVM(searchInput);
+
                 return View("PostSearch", postVM);
             }
             else
@@ -69,11 +67,10 @@ namespace PersonalBlog.Web.Controllers
                 BlogPostsViewModel postVM = new BlogPostsViewModel();
                 return View("PostSearch", postVM);
             }
-            
         }
 
-        [AllowAnonymous]
         // GET: BlogPosts/Details/{id}
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) { return NotFound(); }
