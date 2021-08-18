@@ -51,6 +51,7 @@ namespace PersonalBlog.ClassLibrary
             var identity = new ClaimsIdentity(new List<Claim> { new Claim("sub", userId) });
 
             var bytes = Encoding.UTF8.GetBytes(userId);
+            // Would switch this to AsymmetricSecurityKey if this was a real site
             var key = new SymmetricSecurityKey(bytes);
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
