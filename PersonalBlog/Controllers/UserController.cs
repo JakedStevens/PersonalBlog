@@ -52,7 +52,7 @@ namespace PersonalBlog.Web.Controllers
 			}
 		}
 
-		public IActionResult Login(string returnUrl)
+		public ViewResult Login(string returnUrl)
 		{
 			if (Request.QueryString.HasValue)
 			{
@@ -96,7 +96,7 @@ namespace PersonalBlog.Web.Controllers
 			}
         }
 
-		public async Task<IActionResult> Logout()
+		public async Task<RedirectToActionResult> Logout()
 		{
 			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 

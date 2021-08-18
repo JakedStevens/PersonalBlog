@@ -71,19 +71,19 @@ namespace PersonalBlog.Web.Controllers
 
         // GET: BlogPosts/Details/{id}
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<ViewResult> Details(int? id)
         {
-            if (id == null) { return NotFound(); }
+            if (id == null) { return View("../Shared/NotFound"); }
 
             var blogPost = await _dbContext.BlogPost.FirstOrDefaultAsync(m => m.PostId == id);
 
-            if (blogPost == null) { return NotFound(); }
+            if (blogPost == null) { return View("../Shared/NotFound"); }
 
             return View(blogPost);
         }
 
         // GET: BlogPosts/Create
-        public IActionResult Create()
+        public ViewResult Create()
         {
             return View();
         }
@@ -103,17 +103,17 @@ namespace PersonalBlog.Web.Controllers
         }
 
         // GET: BlogPosts/Edit/{id}
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<ViewResult> Edit(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return View("../Shared/NotFound");
             }
 
             var blogPost = await _dbContext.BlogPost.FindAsync(id);
             if (blogPost == null)
             {
-                return NotFound();
+                return View("../Shared/NotFound");
             }
             return View(blogPost);
         }
@@ -134,7 +134,7 @@ namespace PersonalBlog.Web.Controllers
                 {
                     if (!BlogPostExists(blogPost.PostId))
                     {
-                        return NotFound();
+                        return View("../Shared/NotFound");
                     }
                     else
                     {
@@ -147,18 +147,18 @@ namespace PersonalBlog.Web.Controllers
         }
 
         // GET: BlogPosts/Delete/{id}
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<ViewResult> Delete(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return View("../Shared/NotFound");
             }
 
             var blogPost = await _dbContext.BlogPost
                 .FirstOrDefaultAsync(m => m.PostId == id);
             if (blogPost == null)
             {
-                return NotFound();
+                return View("../Shared/NotFound");
             }
 
             return View(blogPost);
@@ -167,7 +167,7 @@ namespace PersonalBlog.Web.Controllers
         // POST: BlogPosts/Delete/{id}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<RedirectToActionResult> DeleteConfirmed(int id)
         {
             var blogPost = await _dbContext.BlogPost.FindAsync(id);
             _dbContext.BlogPost.Remove(blogPost);
