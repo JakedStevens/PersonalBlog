@@ -56,16 +56,20 @@ namespace PersonalBlog.Web
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			if (env.IsDevelopment())
-			{
-				app.UseDeveloperExceptionPage();
-			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-				app.UseHsts();
-			}
+			//if (env.IsDevelopment())
+			//{
+			//	app.UseDeveloperExceptionPage();
+			//}
+			//else
+			//{
+			//	app.UseExceptionHandler("/Home/Error");
+			//	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+			//	app.UseHsts();
+			//}
+
+			app.UseDeveloperExceptionPage();
+
+
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseRouting();
@@ -73,21 +77,19 @@ namespace PersonalBlog.Web
 			app.UseCookiePolicy();
 			app.UseAuthentication();
 
-			SecretClientOptions options = new SecretClientOptions()
-			{
-				Retry =
-				{
-					Delay= TimeSpan.FromSeconds(2),
-					MaxDelay = TimeSpan.FromSeconds(16),
-					MaxRetries = 5,
-					Mode = RetryMode.Exponential
-				 }
-			};
-			var client = new SecretClient(new Uri("https://amusicblogkeyvault.vault.azure.net/"), new DefaultAzureCredential(), options);
-
-			KeyVaultSecret secret = client.GetSecret("AzureSQLSecret");
-
-			string secretValue = secret.Value;
+			//SecretClientOptions options = new SecretClientOptions()
+			//{
+			//	Retry =
+			//	{
+			//		Delay= TimeSpan.FromSeconds(2),
+			//		MaxDelay = TimeSpan.FromSeconds(16),
+			//		MaxRetries = 5,
+			//		Mode = RetryMode.Exponential
+			//	 }
+			//};
+			//var client = new SecretClient(new Uri("https://amusicblogkeyvault.vault.azure.net/"), new DefaultAzureCredential(), options);
+			//KeyVaultSecret secret = client.GetSecret("");
+			//string secretValue = secret.Value;
 
 			app.UseEndpoints(endpoints =>
 			{
